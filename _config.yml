@@ -1,37 +1,29 @@
-# visit https://github.com/mojombo/jekyll/wiki/Configuration for more settings
+# Site settings
+title: Cyzus' Code
+header-img: img/home-bg.jpg
+email: cyzus@outlook.com
+description: "Why so serious?"
+baseurl: ""
+url: ""
+twitter_username: 
+github_username:  
+facebook_username:  
+weibo_username: 
+zhihu_username: 
 
-paginate: 10 # pagination based on number of posts
-paginate_path: "page:num"
-exclude: ["README.md"] # files to exclude
+# Build settings
+markdown: kramdown 
+
+# markdown: redcarpet
+# redcarpet can auto highlight code, but the lack of header-id make the catalog impossible 
+
 highlighter: pygments
-markdown: kramdown
-disqus: HolyKnight
-google_analytics: HolyKnight
-title: HolyKnight
+permalink: pretty
+paginate: 20
+exclude: ["less","node_modules","Gruntfile.js","package.json","README.md"]
 
-defaults:
-  -
-    scope:
-      path: "" # empty string for all files
-    values:
-      title: HolyKnight
+# use Github Flavored Markdown !important
+# document: http://jekyllrb.com/docs/configuration/#kramdown
 
-description: Stylish Jekyll Theme
-author:
-  name: HolyKnight
-  email: 764262813@qq.com.com
-  github: lyxwll
-  bio: C'est la vie !
-  email_md5: 726351295ec82e145928582f595aa3aa
-
-rss_path: feed.xml
-categories_path: categories.html
-tags_path: tags.html
-
-# set it as url of an image
-# sidebar_background_image: https://www.dropbox.com/s/g9h23zrycedxtk5/sky.png?raw=1
-
-BASE_PATH:
-
-gems:
-  - jekyll-paginate
+kramdown:
+  input: GFM
