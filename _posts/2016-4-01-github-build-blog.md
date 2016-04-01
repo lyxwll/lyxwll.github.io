@@ -1,19 +1,23 @@
-* * *
+---
 
 layout:     post
 
 title:      "使用github pages搭建个人静态博客" 
+
 subtitle:   " \"C'est la vie !\""
+
 date:       2016-04-01 14:50:00
+
 author:     "Wangll"
+
 header-img: "img/ranger_rebecca.jpg"
 
 tag:
 
-*   github
-*   lesson
+   - github
+   - lesson
 
-* * *
+---
 
 **转载自:[http://cyzus.github.io/2015/06/21/github-build-blog/](http://cyzus.github.io/2015/06/21/github-build-blog/)**
 
