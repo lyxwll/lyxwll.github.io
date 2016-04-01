@@ -1,4 +1,4 @@
----
+* * *
 
 layout:     post
 
@@ -14,11 +14,10 @@ header-img: "img/2015-6-21-github-build-blog/The-New-Internet.jpg"
 
 tag:
 
-   - github
-   - lesson
+*   github
+*   lesson
 
----
-
+--
 
 **转载自:[http://cyzus.github.io/2015/06/21/github-build-blog/](http://cyzus.github.io/2015/06/21/github-build-blog/)**
 
