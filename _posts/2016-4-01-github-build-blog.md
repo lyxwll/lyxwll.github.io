@@ -10,7 +10,7 @@ date:       2016-04-01 15:09:00
 
 author:     "Wangll"
 
-header-img: "img/ranger_rebecca.jpg"
+header-img: "img/2015-6-21-github-build-blog/The-New-Internet.jpg"
 
 tag:
 
