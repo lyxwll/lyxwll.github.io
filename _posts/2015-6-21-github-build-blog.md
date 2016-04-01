@@ -1,15 +1,10 @@
 ---
 
 layout:     post
-
-title:      "傻瓜都可以利用github pages建博客" 
-
-subtitle:   " \"今日，你我都是小白\""
-
+title:      "使用github pages搭建个人静态博客" 
+subtitle:   " \"C'est la vie !\""
 date:       2015-06-21 09:00:00
-
-author:     "Cyzus"
-
+author:     "Wangll"
 header-img: "img/2015-6-21-github-build-blog/The-New-Internet.jpg"
 
 tag:
@@ -18,6 +13,8 @@ tag:
    - lesson
 
 ---
+
+**转载自:http://cyzus.github.io/2015/06/21/github-build-blog/**
 
 ### 1.前言 ###
 
