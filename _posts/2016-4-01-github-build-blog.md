@@ -1,25 +1,42 @@
-* * *
+﻿---
+
+
 
 layout:     post
 
+
 title:      "使用github pages搭建静态博客" 
+
 
 subtitle:   " \"C'est la vie !\""
 
+
 date:       2016-04-01 15:09:00
+
 
 author:     "Wangll"
 
+
 header-img: "img/2015-6-21-github-build-blog/The-New-Internet.jpg"
+
 
 tag:
 
-*   github
-*   lesson
 
---
+   - github
+
+   - lesson
+
+
+
+---
+
+
+
 
 **转载自:[http://cyzus.github.io/2015/06/21/github-build-blog/](http://cyzus.github.io/2015/06/21/github-build-blog/)**
+
+
 
 ### 1.前言
 
