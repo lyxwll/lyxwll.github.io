@@ -1,0 +1,29 @@
+# Site settings
+title: Cyzus' Code
+header-img: img/home-bg.jpg
+email: cyzus@outlook.com
+description: "Why so serious?"
+baseurl: ""
+url: ""
+twitter_username: 
+github_username:  
+facebook_username:  
+weibo_username: 
+zhihu_username: 
+
+# Build settings
+markdown: kramdown 
+
+# markdown: redcarpet
+# redcarpet can auto highlight code, but the lack of header-id make the catalog impossible 
+
+highlighter: pygments
+permalink: pretty
+paginate: 20
+exclude: ["less","node_modules","Gruntfile.js","package.json","README.md"]
+
+# use Github Flavored Markdown !important
+# document: http://jekyllrb.com/docs/configuration/#kramdown
+
+kramdown:
+  input: GFM
