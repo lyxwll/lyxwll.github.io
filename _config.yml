@@ -1,15 +1,15 @@
 # Site settings
-title: Cyzus' Code
+title: HolyKnight
 header-img: img/home-bg.jpg
-email: cyzus@outlook.com
-description: "Why so serious?"
+email: 764262813@qq.com
+description: "C'est la vie !"
 baseurl: ""
 url: ""
 twitter_username: 
-github_username:  
+github_username:  lyxwll
 facebook_username:  
 weibo_username: 
-zhihu_username: 
+zhihu_username: holyknight
 
 # Build settings
 markdown: kramdown 
