@@ -1,3 +1,16 @@
+---
+layout:     post
+title:      "Markdown的使用帮助" 
+subtitle:   ""
+date:       2016-04-08 16:00:00
+author:     "Wanglili"
+header-img: "img/code.jpg"
+tag:
+   - help
+---
+
+
+
 ﻿# 欢迎使用 Cmd Markdown 编辑阅读器
 
 ------
