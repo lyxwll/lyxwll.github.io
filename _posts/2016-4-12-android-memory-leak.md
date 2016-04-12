@@ -1,4 +1,17 @@
-﻿# Android内存泄漏
+---
+
+layout:     post
+title:      "Android内存泄漏" 
+subtitle:   " \"C'est la vie !\""
+date:       2016-04-12 16:50:00
+author:     "Wangll"
+header-img: "img/ranger_rebecca.jpg"
+
+tag:
+
+   - Android
+
+---
 
 ------
 
