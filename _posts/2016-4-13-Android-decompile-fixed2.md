@@ -5,7 +5,7 @@ title:      "Android安全攻防战，反编译与混淆技术完全解析（下
 subtitle:   " \"C'est la vie !\""
 date:       2016-04-13 15:30:00
 author:     "Wangll"
-header-img: "img/ranger_rebecca.jpg"
+header-img: "img/ridley.jpg"
 
 tag:
    - Android
@@ -13,195 +13,341 @@ tag:
 ---
 
 
-转载自:郭霖大神的[http://blog.csdn.net/guolin_blog/article/details/49738023](http://blog.csdn.net/guolin_blog/article/details/49738023)
+转载自:郭霖大神的[http://blog.csdn.net/guolin_blog/article/details/50451259](http://blog.csdn.net/guolin_blog/article/details/50451259)
 
 ----------
 
-##反编译
+混淆代码并不是让代码无法被反编译，而是将代码中的类、方法、变量等信息进行重命名，把它们改成一些毫无意义的名字。因为对于我们而言可能Cellphone类的call()方法意味着很多信息，而A类的b()方法则没有任何意义，但是对于计算机而言，它们都是平等的，计算机不会试图去理解Cellphone是什么意思，它只会按照设定好的逻辑来去执行这些代码。所以说混淆代码可以在不影响程序正常运行的前提下让破解者很头疼，从而大大提升了程序的安全性。 
 
-我们都知道，[Android](http://lib.csdn.net/base/15)程序打完包之后得到的是一个APK文件，这个文件是可以直接安装到任何Android手机上的，我们反编译其实也就是对这个APK文件进行反编译。Android的反编译主要又分为两个部分，一个是对代码的反编译，一个是对资源的反编译，我们马上来逐个学习一下。 
 
-在开始学习之前，首先我们需要准备一个APK文件，为了尊重所有开发者，我就不拿任何一个市面上的软件来演示了，而是自己写一个Demo用来测试。 
-这里我希望代码越简单越好，因此我们建立一个新项目，在Activity里加入一个按钮，当点击按钮时弹出一个Toast，就这么简单，代码如下所示：
+##混淆   
+本篇文章中介绍的混淆技术都是基于Android Studio的，Eclipse的用法也基本类似，但是就不再为Eclipse专门做讲解了。 
+我们要建立一个Android Studio项目，并在项目中添加一些能够帮助我们理解混淆知识的代码。这里我准备好了一些，我们将它们添加到Android Studio当中。 
+首先新建一个MyFragment类，代码如下所示：
+
 ```
- public class MainActivity extends AppCompatActivity {
+public class MyFragment extends Fragment {
+
+    private String toastTip = "toast in MyFragment";
+
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_layout, container, false);
+        methodWithGlobalVariable();
+        methodWithLocalVariable();
+        return view;
+    }
+
+    public void methodWithGlobalVariable() {
+        Toast.makeText(getActivity(), toastTip, Toast.LENGTH_SHORT).show();
+    }
+
+    public void methodWithLocalVariable() {
+        String logMessage = "log in MyFragment";
+        logMessage = logMessage.toLowerCase();
+        System.out.println(logMessage);
+    }
+}
+```   
+
+可以看到，MyFragment是继承自Fragment的，并且MyFragment中有一个全局变量。onCreateView()方法是Fragment的生命周期函数，这个不用多说，在onCreateView()方法中又调用了methodWithGlobalVariable()和methodWithLocalVariable()方法，这两个方法的内部分别引用了一个全局变量和一个局部变量。 
+接下来新建一个Utils类，代码如下所示：
+```
+public class Utils {
+
+    public void methodNormal() {
+        String logMessage = "this is normal method";
+        logMessage = logMessage.toLowerCase();
+        System.out.println(logMessage);
+    }
+
+    public void methodUnused() {
+        String logMessage = "this is unused method";
+        logMessage = logMessage.toLowerCase();
+        System.out.println(logMessage);
+    }
+}
+```   
+
+这是一个非常普通的工具类，没有任何继承关系。Utils中有两个方法methodNormal()和methodUnused()，它们的内部逻辑都是一样的，唯一的据别是稍后methodNormal()方法会被调用，而methodUnused()方法不会被调用。 
+下面再新建一个NativeUtils类，代码如下所示：
+```
+public class NativeUtils {
+
+    public static native void methodNative();
+
+    public static void methodNotNative() {
+        String logMessage = "this is not native method";
+        logMessage = logMessage.toLowerCase();
+        System.out.println(logMessage);
+    }
+}
+```    
+
+这个类中同样有两个方法，一个是native方法，一个是非native方法。 
+最后，修改MainActivity中的代码，如下所示：
+```
+public class MainActivity extends AppCompatActivity {
+
+    private String toastTip = "toast in MainActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        getSupportFragmentManager().beginTransaction().add(R.id.fragment, new MyFragment()).commit();
         Button button = (Button) findViewById(R.id.button);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(MainActivity.this, "you clicked button", Toast.LENGTH_SHORT).show();
+                methodWithGlobalVariable();
+                methodWithLocalVariable();
+                Utils utils = new Utils();
+                utils.methodNormal();
+                NativeUtils.methodNative();
+                NativeUtils.methodNotNative();
+                Connector.getDatabase();
             }
         });
     }
+
+    public void methodWithGlobalVariable() {
+        Toast.makeText(MainActivity.this, toastTip, Toast.LENGTH_SHORT).show();
+    }
+
+    public void methodWithLocalVariable() {
+        String logMessage = "log in MainActivity";
+        logMessage = logMessage.toLowerCase();
+        System.out.println(logMessage);
+    }
 }
+```    
+
+可以看到，MainActivity和MyFragment类似，也是定义了methodWithGlobalVariable()和methodWithLocalVariable()这两个方法，然后MainActivity对MyFragment进行了添加，并在Button的点击事件里面调用了自身的、Utils的、以及NativeUtils中的方法。注意调用native方法需要有相应的so库实现，不然的话就会报UnsatisefiedLinkError，不过这里其实我也并没有真正的so库实现，只是演示一下让大家看看混淆结果。点击事件的最后一行调用的是LitePal中的方法，因为我们还要测试一下引用第三方Jar包的场景，到LitePal项目的主页去下载最新的Jar包，然后放到libs目录下即可。 
+完整的build.gradle内容如下所示：
+```
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 23
+    buildToolsVersion "23.0.2"
+
+    defaultConfig {
+        applicationId "com.example.guolin.androidtest"
+        minSdkVersion 15
+        targetSdkVersion 23
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile 'com.android.support:appcompat-v7:23.2.0'
+}
+```   
+
+好的，到这里准备工作就已经基本完成了，接下来我们就开始对代码进行混淆吧。
+
+
+##混淆APK
+
+在Android Studio当中混淆APK实在是太简单了，借助SDK中自带的Proguard工具，只需要修改build.gradle中的一行配置即可。可以看到，现在build.gradle中minifyEnabled的值是false，这里我们只需要把值改成true，打出来的APK包就会是混淆过的了。如下所示：
+```
+release {
+    minifyEnabled true
+    proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+}
+```  
+
+其中minifyEnabled用于设置是否启用混淆，proguardFiles用于选定混淆配置文件。注意这里是在release闭包内进行配置的，因此只有打出正式版的APK才会进行混淆，Debug版的APK是不会混淆的。当然这也是非常合理的，因为Debug版的APK文件我们只会用来内部测试，不用担心被人破解。 
+那么现在我们来打一个正式版的APK文件，在Android Studio导航栏中点击Build->Generate Signed APK，然后选择签名文件并输入密码，如果没有签名文件就创建一个，最终点击Finish完成打包，生成的APK文件会自动存放在app目录下。除此之外也可以在build.gradle文件当中添加签名文件配置，然后通过gradlew assembleRelease来打出一个正式版的APK文件，这种方式APK文件会自动存放在app/build/outputs/apk目录下。 
+那么现在已经得到了APK文件，接下来就用上篇文章中学到的反编译知识来对这个文件进行反编译吧，结果如下图所示：        
+![img]()   
+
+很明显可以看出，我们的代码混淆功能已经生效了。 
+下面我们尝试来阅读一下这个混淆过后的代码，最顶层的包名结构主要分为三部分，第一个a.a已经被混淆的面目全非了，但是可以猜测出这个包下是LitePal的所有代码。第二个android.support可以猜测出是我们引用的android support库的代码，第三个com.example.guolin.androidtest则很明显就是我们项目的主包名了，下面将里面所有的类一个个打开看一下。 
+首先MainActivity中的代码如下所示：        
+![img]()
+
+可以看到，MainActivity的类名是没有混淆的，onCreate()方法也没有被混淆，但是我们定义的方法、全局变量、局部变量都被混淆了。 
+再来打开下一个类NativeUtils，如下所示：          
+![img]()   
+
+NativeUtils的类名没有被混淆，其中声明成native的方法也没有被混淆，但是非native方法的方法名和局部变量都被混淆了。 
+接下来是a类的代码，如下所示：       
+![img]()
+
+很明显，这个是MainActivity中按钮点击事件的匿名类，在onClick()方法中的调用代码虽然都被混淆了，但是调用顺序是不会改变的，对照源代码就可以看出哪一行是调用的什么方法了。 
+
+再接下来是b类，代码如下所示：       
+![img]()   
+
+虽然被混淆的很严重，但是我们还是可以看出这个是MyFragment类。其中所有的方法名、全局变量、局部变量都被混淆了。 
+最后再来看下c类，代码如下所示：      
+![img]()
+
+c类中只有一个a方法，从字符串的内容我们可以看出，这个是Utils类中的methodNormal()方法。
+
+我为什么要创建这样的一个项目呢？因为从这几个类当中很能看出一些问题，接下来我们就分析一下上面的混淆结果。 
+首先像Utils这样的普通类肯定是会被混淆的，不管是类名、方法名还是变量都不会放过。除了混淆之外Utils类还说明了一个问题，就是minifyEnabled会对资源进行压缩，因为Utils类中我们明明定义了两个方法，但是反编译之后就只剩一个方法了，因为另外一个方法没有被调用，所以认为是多余的代码，在打包的时候就给移除掉了。不仅仅是代码，没有被调用的资源同样也会被移除掉，因此minifyEnabled除了混淆代码之外，还可以起到压缩APK包的作用。 
+
+接着看一下MyFragment，这个类也是混淆的比较彻底的，基本没有任何保留。那有些朋友可能会有疑问，Fragment怎么说也算是系统组件吧，就算普通方法名被混淆了，至少像onCreateView()这样的生命周期方法不应该被混淆吧？其实生命周期方法会不会被混淆和我们使用Fragment的方式有关，比如在本项目中，我使用的是android.support.v4.app.Fragment，support-v4包下的，就连Fragment的源码都被一起混淆了，因此生命周期方法当然也不例外了。但如果你使用的是android.app.Fragment，这就是调用手机系统中预编译好的代码了，很明显我们的混淆无法影响到系统内置的代码，因此这种情况下onCreateView()方法名就不会被混淆，但其它的方法以及变量仍然会被混淆。 
+
+接下来看一下MainActivity，同样也是系统组件之一，但MainActivity的保留程度就比MyFragment好多了，至少像类名、生命周期方法名都没有被混淆，这是为什么呢？根据我亲身测试得出结论，凡是需要在AndroidManifest.xml中去注册的所有类的类名以及从父类重写的方法名都自动不会被混淆。因此，除了Activity之外，这份规则同样也适用于Service、BroadcastReceiver和ContentProvider。 
+
+最后看一下NativeUtils类，这个类的类名也没有被混淆，这是由于它有一个声明成native的方法。只要一个类中有存在native方法，它的类名就不会被混淆，native方法的方法名也不会被混淆，因为C++代码要通过包名+类名+方法名来进行交互。 但是类中的别的代码还是会被混淆的。 
+除此之外，第三方的Jar包都是会被混淆的，LitePal不管是包名还是类名还是方法名都被完完全全混淆掉了。 
+这些就是Android Studio打正式APK时默认的混淆规则。 \
+
+那么这些混淆规则是在哪里定义的呢？其实就是刚才在build.gradle的release闭包下配置的proguard-android.txt文件，这个文件存放于<Android SDK>/tools/proguard目录下，我们打开来看一下：     
+```
+# This is a configuration file for ProGuard.
+# http://proguard.sourceforge.net/index.html#manual/usage.html
+
+-dontusemixedcaseclassnames
+-dontskipnonpubliclibraryclasses
+-verbose
+
+# Optimization is turned off by default. Dex does not like code run
+# through the ProGuard optimize and preverify steps (and performs some
+# of these optimizations on its own).
+-dontoptimize
+-dontpreverify
+# Note that if you want to enable optimization, you cannot just
+# include optimization flags in your own project configuration file;
+# instead you will need to point to the
+# "proguard-android-optimize.txt" file instead of this one from your
+# project.properties file.
+
+-keepattributes *Annotation*
+-keep public class com.google.vending.licensing.ILicensingService
+-keep public class com.android.vending.licensing.ILicensingService
+
+# For native methods, see http://proguard.sourceforge.net/manual/examples.html#native
+-keepclasseswithmembernames class * {
+    native <methods>;
+}
+
+# keep setters in Views so that animations can still work.
+# see http://proguard.sourceforge.net/manual/examples.html#beans
+-keepclassmembers public class * extends android.view.View {
+   void set*(***);
+   *** get*();
+}
+
+# We want to keep methods in Activity that could be used in the XML attribute onClick
+-keepclassmembers class * extends android.app.Activity {
+   public void *(android.view.View);
+}
+
+# For enumeration classes, see http://proguard.sourceforge.net/manual/examples.html#enumerations
+-keepclassmembers enum * {
+    public static **[] values();
+    public static ** valueOf(java.lang.String);
+}
+
+-keepclassmembers class * implements android.os.Parcelable {
+  public static final android.os.Parcelable$Creator CREATOR;
+}
+
+-keepclassmembers class **.R$* {
+    public static <fields>;
+}
+
+# The support library contains references to newer platform versions.
+# Dont warn about those in case this app is linking against an older
+# platform version.  We know about them, and they are safe.
+-dontwarn android.support.**
 ```
 
-activity_main.xml中的资源如下所示：
+这个就是默认的混淆配置文件了，我们来一起逐行阅读一下。 
+-dontusemixedcaseclassnames 表示混淆时不使用大小写混合类名。 
+-dontskipnonpubliclibraryclasses 表示不跳过library中的非public的类。 
+-verbose 表示打印混淆的详细信息。 
+-dontoptimize 表示不进行优化，建议使用此选项，因为根据proguard-android-optimize.txt中的描述，优化可能会造成一些潜在风险，不能保证在所有版本的Dalvik上都正常运行。 
+-dontpreverify 表示不进行预校验。这个预校验是作用在Java平台上的，Android平台上不需要这项功能，去掉之后还可以加快混淆速度。 
+-keepattributes *Annotation* 表示对注解中的参数进行保留。
 ```
-<?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin">
-    
-      <Button
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Button"/>
-
-</RelativeLayout>
+-keep public class com.google.vending.licensing.ILicensingService
+-keep public class com.android.vending.licensing.ILicensingService
 ```
+表示不混淆上述声明的两个类，这两个类我们基本也用不上，是接入Google原生的一些服务时使用的。
+```
+-keepclasseswithmembernames class * {
+    native <methods>;
+}
+```   
+表示不混淆任何包含native方法的类的类名以及native方法名，这个和我们刚才验证的结果是一致的。
+```
+-keepclassmembers public class * extends android.view.View {
+   void set*(***);
+   *** get*();
+}
+``` 
+表示不混淆任何一个View中的setXxx()和getXxx()方法，因为属性动画需要有相应的setter和getter的方法实现，混淆了就无法工作了。
+```
+-keepclassmembers class * extends android.app.Activity {
+   public void *(android.view.View);
+}
+```   
+表示不混淆Activity中参数是View的方法，因为有这样一种用法，在XML中配置android:onClick=”buttonClick”属性，当用户点击该按钮时就会调用Activity中的buttonClick(View view)方法，如果这个方法被混淆的话就找不到了。
+```
+-keepclassmembers enum * {
+    public static **[] values();
+    public static ** valueOf(java.lang.String);
+}
+```   
+表示不混淆枚举中的values()和valueOf()方法，枚举我用的非常少，这个就不评论了。
+```
+-keepclassmembers class * implements android.os.Parcelable {
+  public static final android.os.Parcelable$Creator CREATOR;
+}
+```   
+表示不混淆Parcelable实现类中的CREATOR字段，毫无疑问，CREATOR字段是绝对不能改变的，包括大小写都不能变，不然整个Parcelable工作机制都会失败。
+```
+-keepclassmembers class **.R$* {
+    public static <fields>;
+}
+```   
+表示不混淆R文件中的所有静态字段，我们都知道R文件是通过字段来记录每个资源的id的，字段名要是被混淆了，id也就找不着了。 
+-dontwarn android.support.** 表示对android.support包下的代码不警告，因为support包中有很多代码都是在高版本中使用的，如果我们的项目指定的版本比较低在打包时就会给予警告。不过support包中所有的代码都在版本兼容性上做足了判断，因此不用担心代码会出问题，所以直接忽略警告就可以了。 
 
-然后我们将代码打成一个APK包，并命名成Demo.apk，再把它安装到手机上，结果如下所示： 
-![img](/img/2016-4-13/001.gif)
-
-好的，到这里准备工作就已经基本完成了，接下来就让我们开始对这个Demo程序进行反编译吧。
-
-
-##反编译代码
-
-要想将APK文件中的代码反编译出来，我们需要用到以下两款工具：
-
-> * dex2jar 这个工具用于将dex文件转换成jar文件        
-
-下载地址：[http://sourceforge.net/projects/dex2jar/files/](http://sourceforge.net/projects/dex2jar/files/)
-
-> * jd-gui 这个工具用于将jar文件转换成java代码 
-
-下载地址：[http://jd.benow.ca/](http://jd.benow.ca/)
-将这两个工具都下载好并解压，然后我们就开始对Demo程序进行反编译。解压dex2jar压缩包后，你会发现有很多个文件，如下图所示：     
-![img](/img/2016-4-13/002.png)
-
-其中我们要用到的是d2j-dex2jar.bat这个文件，当然如果你是linux或mac系统的话就要用d2j-dex2jar.sh这个文件。 
-然后我们将Demo.apk文件也进行解压，如果不知道怎么直接解压的可以先将文件重命名成Demo.zip，然后用解压软件打开。解压之后你会发现里面有一个classes.dex文件，如下图所示：        
-![img](/img/2016-4-13/003.png)
-
-这个classes.dex文件就是存放所有java代码的地方了，我们将它拷贝到dex2jar解压后的目录下，并在cmd中也进入到同样的目录，然后执行：
-> d2j-dex2jar classes.dex   
-
-执行结果如下图所示：      
-![img](/img/2016-4-13/004.png)
-
-没有报任何错误，这就说明我们已经转换成功了。现在观察dex2jar目录，你会发现多了一个文件，如下图所示：       
-![img](/img/2016-4-13/005.png)
-
-可以看到，classes-dex2jar.jar这个文件就是我们借助工具之后成功转换出来的jar文件了。但是对于我们而言，jar文件也不是可读的，因此这里还需要再借助一下jd-gui这个工具来将jar文件转换成java代码。 
-
-下面就很简单了，使用jd-gui工具打开classes-dex2jar.jar这个文件，结果如下图所示：       
-![img](/img/2016-4-13/006.png)
-
-OK，由此可见，我们的代码反编译工作已经成功了，MainActivity中的代码非常清晰，基本已经做到了90%以上的还原工作。但是如果想要做到100%的代码还原还是非常有难度的，因为像setContentView()方法传入的参数，其实就是一个资源的id值而已，那么这里反编译也就只能将相应的id值进行还原，而无法变成像R.layout.activity_main这样直观的代码展示。 
-
-另外，除了MainActivity之外，还有很多其它的代码也被反编译出来了，因为当前项目有引用support-v4和support-v7的包，这些引用的library也会作为代码的一部分被打包到classes.dex文件当中，因此反编译的时候这些代码也会一起被还原。 
-好的，学完了反编译代码，接下来我们看一下如何反编译资源。
-
-
-##反编译资源
-
-其实细心的朋友可能已经观察到了，刚才Demo.apk的解压目录当中不是已经有资源文件了吗，有AndroidManifest.xml文件，也有res目录。进入res目录当中，内容如下图所示：        
-![img](/img/2016-4-13/007.png)
-
-这不是所有资源文件都在这里了么？其实这些资源文件都是在打包的时候被编译过了，我们直接打开的话是看不到明文的，不信的话我们打开AndroidManifest.xml文件来瞧一瞧，内容如下图所示：       
-![img](/img/2016-4-13/008.png)
-
-可以看到，这代码是完全没法阅读的。当然如果你去打开activity_main.xml看看，结果也不会好到哪儿去：       
-![img](/img/2016-4-13/009.png)
-
-由此可见，直接对APK包进行解压是无法得到它的原始资源文件的，因此我们还需要对资源进行反编译才行。 
-
-要想将APK文件中的资源反编译出来，又要用到另外一个工具了：
-
-> * apktool 这个工具用于最大幅度地还原APK文件中的9-patch图片、布局、字符串等等一系列的资源。 
-
-下载地址：[http://ibotpeaches.github.io/Apktool/install/](http://ibotpeaches.github.io/Apktool/install/)         
-关于这个工具的下载我还要再补充几句，我们需要的就是apktool.bat和apktool.jar这两个文件。目前apktool.jar的最新版本是2.0.3，这里我就下载最新的了，然后将apktool_2.0.3.jar重命名成apktool.jar，并将它们放到同一个文件夹下就可以了，如下图所示：         
-![img](/img/2016-4-13/010.png)
-
-接下来的工作就很简单了，我们将Demo.apk拷贝到和这两个文件同样的目录当中，然后cmd也进入到这个目录下，并在cmd中执行如下命令：
-> apktool d Demo.apk    
-
-其中d是decode的意思，表示我们要对Demo.apk这个文件进行解码。那除了这个基本用法之外，我们还可以再加上一些附加参数来控制decode的更多行为：
-
-> * -f 如果目标文件夹已存在，则强制删除现有文件夹（默认如果目标文件夹已存在，则解码失败）。
-> * -o 指定解码目标文件夹的名称（默认使用APK文件的名字来命名目标文件夹）。
-> * -s 不反编译dex文件，也就是说classes.dex文件会被保留（默认会将dex文件解码成smali文件）。
-> * -r 不反编译资源文件，也就是说resources.arsc文件会被保留（默认会将resources.arsc解码成具体的资源文件）。
-
-常用用法就这么多了，那么上述命令的执行结果如下图所示：        
-![img](/img/2016-4-13/011.png)
-
-这就说明反编译资源已经成功了。 
-当然即使你在和我执行一模一样的操作，也有可能会在这里反编译失败，比如说会报如下错误：        
-![img](/img/2016-4-13/012.png)
-
-出现这个错误的原因很有可能是你之前使用过apktool的老版本进行过反编译操作，然后apktool就会在你系统的C:\Users\Administrator\apktool\framework这个目录下生成一个名字为1.apk的缓存文件，将这个缓存文件删除掉，然后再重新执行反编译命令应该就可以成功了。 
-
-现在你会发现在当前目录下多了一个Demo文件夹，这个文件夹中存放的就是反编译的结果了。我们可以打开AndroidManifest.xml来瞧一瞧，如下图所示：        
-![img](/img/2016-4-13/013.png)
-
-怎么样？这样就完全能看得懂了吧，然后可以再到res/layout中看一下activity_main.xml文件，如下图所示：         
-![img](/img/2016-4-13/014.png)
-
-可以看到，activity_main.xml中的内容基本和源代码中的内容是一致的，外层是一个RelativeLayout，里面则是一个Button。你可以再到其它目录中去看一看别的资源，基本上都是可以正常还原的，这样我们就把反编译资源的方法也已经掌握了。
-
-
-##重新打包
-
-那么对于反编译出来的文件夹，我们能不能重新把它打包成APK文件呢？答案是肯定的，只不过我实在想不出有什么义正言辞的理由可以让我们这么做。有的人会说汉化，没错，汉化的方式确实就是将一个APK进行反编译，然后翻译其中的资源再重新打包，但是不管怎么说这仍然是将别人的程序进行破解，所以我并不认为这是什么光荣的事情。那么我们就不去讨论本身这件事情的对或错，这里只是站在技术的角度来学习一下重新打包的相关知识。 
-首先我们来看一下通过apktool反编译后的包目录情况，如下图所示：         
-![img](/img/2016-4-13/015.png)
-
-其中，original文件夹下存放的是未经反编译过、原始的AndroidManifest.xml文件，res文件夹下存放的是反编译出来的所有资源，smali文件夹下存放的是反编译出来的所有代码，AndroidManifest.xml则是经过反编译还原后的manifest文件。这里值得一提的是smali文件夹，如果你进入到这个文件夹中你会发现它的目录结构和我们源码中src的目录结构是几乎一样的，主要的区别就是所有的java文件都变成了smali文件。smali文件其实也是真正的源代码，只不过它的语法和java完全不同，它有点类似于汇编的语法，是Android虚拟机所使用的寄存器语言，语法结构大概如下所示：        
-![img](/img/2016-4-13/016.png)
-
-看上去有点晕头转向是吗？但是如果你一旦能够看得懂smali文件的话，那么你就可以做很恐怖的事情了——你可以随意修改应用程序内的逻辑，将其进行破解！ 
-不过我对这种黑技术并没有什么太大的兴趣，因此我也没有去做具体研究，但即使是这样，也已经可以对程序的逻辑做一定程度的修改了。比如说当我们点击按钮时会弹出you clicked button这样一句Toast，逻辑是写在MainActivity按钮点击事件的匿名类当中的，因此这段代码反编译之后一定就会在MainActivity$1.smali这个文件当中，让我们打开瞧一瞧，部分代码如下所示：        
-![img](/img/2016-4-13/017.png)
-
-虽说多数的代码我是看不懂的，但其中第47行实在太明显了，Toast显示的内容不就是在这里定义的么，那么如果我们想把Demo程序hack掉，就可以将这段字符串给改掉，比如说我把它改成Your app is been hacked。 
-关于smali的语法，网上的资料也非常多，如果你对这门技术十分感兴趣的话可以直接上网去搜，这里我只是简单介绍一下，就不再深入讲解相关知识了。
-改了一处代码后我们再来改一处资源吧，比如这里想要把Demo的应用图标给换掉，那么首先我们要准备好一张新的图片，如下图所示：      
-![img](/img/2016-4-13/018.png)
-
-然后从AndroidManifest.xml文件中可以看出，应用图标使用的是ic_launcher.png这张图片，那么我们将上面篮球这张图片命名成ic_launcher.png，然后拷贝到所有以res/mipmap开头的文件夹当中完成替换操作。 
-在做了两处改动之后，我们现在来把反编译后的Demo文件夹重新打包成APK吧，其实非常简单，只需要在cmd中执行如下命令：
-> apktool b Demo -o New_Demo.apk
-
-其中b是build的意思，表示我们要将Demo文件夹打包成APK文件，-o用于指定新生成的APK文件名，这里新的文件叫作New_Demo.apk。执行结果如下图所示：        
-![img](/img/2016-4-13/019.png)
-
-现在你会发现在同级目录下面生成了一个新的APK文件：        
-![img](/img/2016-4-13/020.png)
-
-不过不要高兴得太早了，目前这个New_Demo.apk还是不能安装的，因为它还没有进行签名。那么如果这是别人的程序的话，我们从哪儿能拿到它原来的签名文件呢？很显然，这是根本没有办法拿到的，因此我们只能拿自己的签名文件来对这个APK文件重新进行签名，但同时也表明我们重新打包出来的软件就是个十足的盗版软件。这里大家学学技术就好了，希望不要有任何人去做什么坏事情。 
-那么这里我就用一个之前生成好的签名文件了，使用Android Studio或者Eclipse都可以非常简单地生成一个签名文件。 
-有了签名文件之后在cmd中执行签名命令就可以进行签名了，命令格式如下：
-> jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore 签名文件名 -storepass 签名密码 待签名的APK文件名 签名的别名
-
-其中jarsigner命令文件是存放在jdk的bin目录下的，需要将bin目录配置在系统的环境变量当中才可以在任何位置执行此命令。 
-签名之后的APK文件现在已经可以安装到手机上了，不过在此之前Android还极度建议我们对签名后的APK文件进行一次对齐操作，因为这样可以使得我们的程序在Android系统中运行得更快。对齐操作使用的是zipalign工具，该工具存放于<Android SDK>/build-tools/<version>目录下，将这个目录配置到系统环境变量当中就可以在任何位置执行此命令了。命令格式如下：
-> zipalign 4 New_Demo.apk New_Demo_aligned.apk
-
-其中4是固定值不能改变，后面指定待对齐的APK文件名和对齐后的APK文件名。运行这段命令之后就会生成一个New_Demo_aligned.apk文件，如下所示：        
-![img](/img/2016-4-13/021.png)
-
-这个New_Demo_aligned.apk就是我们重新打包签名对齐后的文件了，现在把它安装到手机上，效果如下图所示：        
-![img](/img/2016-4-13/022.gif)
-
-可以看到，应用图标已经成功改成了篮球，另外点击按钮后弹出的Toast的提示也变成了我们修改后的文字，说明重新打包操作确实已经成功了。
+好了，这就是proguard-android.txt文件中所有默认的配置，而我们混淆代码也是按照这些配置的规则来进行混淆的。经过我上面的讲解之后，相信大家对这些配置的内容基本都能理解了。不过proguard语法中还真有几处非常难理解的地方，我自己也是研究了好久才搞明白，下面和大家分享一下这些难懂的语法部分。 
+proguard中一共有三组六个keep关键字，很多人搞不清楚它们的区别，这里我们通过一个表格来直观地看下：
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+混淆后的文件我将它配置在了/Users/guolin/androidtest_obfuscated.jar这里，如果反编译一下这个文件，你会发现和刚才反编译APK得到的结果是差不多的：MainActivity的类名以及从父类继承的方法名不会被混淆，NativeUtils的类名和其中的native方法名不会被混淆，Utils的methodUnsed方法不会被移除，因为我们禁用了Shrink功能，其余的代码都会被混淆。
 
 
 
