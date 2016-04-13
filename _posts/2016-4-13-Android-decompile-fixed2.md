@@ -464,10 +464,10 @@ Input/Output界面是用于导入要混淆的Jar包、配置混淆后文件的�
 ![img](/img/2016-4-13/030.png)
 
 其中AppCompatActivity是在appcompat-v7包中的，它的父类FragmentActivity是在support-v4包中的，这两个包我们都已经添加依赖了。但是FragmentActivity的父类就坑爹了，如果你去看BaseFragmentActivityHoneycomb和BaseFragmentActivityDonut这两个类的源码，你会发现它们都是在support-v4包中的：    
-![img](/img/2016-4-13/031.jpg)   
+![img](/img/2016-4-13/031.jpg)
+![img](/img/2016-4-13/032.jpg)
 
 可是如果你去support-v4的Jar包中找一下，你会发现压根就没有这两个类，所以我当时一直混淆报错就是因为这两个类不存在，继承结构在这里断掉了。而这两个类其实被规整到了另外一个internal的Jar包中，所以当你要混淆的Jar包中有Activity，并且还是继承自AppCompatActivity或FragmentActivity的话，那么就一定要记得导入这个internal Jar包的依赖，如下图所示：     
-![img](/img/2016-4-13/032.jpg)
 ![img](/img/2016-4-13/033.jpg)  
 
 接下来点击Next进入Shrink界面，这个界面没什么需要配置的东西，但记得要将Shrink选项钩掉，因为我们这个Jar包是独立存在的，没有任何项目引用，如果钩中Shrink选项的话就会认为我们所有的代码都是无用的，从而把所有代码全压缩掉，导出一个空的Jar包。 
