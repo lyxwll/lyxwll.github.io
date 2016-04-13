@@ -1,3 +1,15 @@
+---
+layout:     post
+title:      "Markdown的基本语法" 
+subtitle:   "C'est la vie !"
+date:       2016-04-13 17:00:00
+author:     "Wanglili"
+header-img: "img/code.jpg"
+tag:
+   - help
+---
+
+
 ## 主要内容 ##
 > #### Markdown是_什么_？ ####
 > #### _谁_发明了这么个东西？ ####
