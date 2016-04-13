@@ -64,16 +64,16 @@ activity_main.xml中的资源如下所示：
 ```
 
 然后我们将代码打成一个APK包，并命名成Demo.apk，再把它安装到手机上，结果如下所示： 
-
-
+<img src="./img/2016-4-13/001.gif" width="30%" height="25%" >
 
 好的，到这里准备工作就已经基本完成了，接下来就让我们开始对这个Demo程序进行反编译吧。
+
 
 ##反编译代码
 
 要想将APK文件中的代码反编译出来，我们需要用到以下两款工具：
 
-> * dex2jar 这个工具用于将dex文件转换成jar文件 
+> * dex2jar 这个工具用于将dex文件转换成jar文件        
 
 下载地址：[http://sourceforge.net/projects/dex2jar/files/](http://sourceforge.net/projects/dex2jar/files/)
 
