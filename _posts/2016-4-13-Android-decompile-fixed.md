@@ -1,5 +1,4 @@
 ---
-
 layout:     post
 title:      "Android安全攻防战，反编译与混淆技术完全解析（上）" 
 subtitle:   " \"C'est la vie !\""
@@ -9,11 +8,10 @@ header-img: "img/emily.jpg"
 
 tag:
    - Android
-
 ---
 
 
-转载自:郭霖大神的[http://blog.csdn.net/guolin_blog/article/details/49738023](http://blog.csdn.net/guolin_blog/article/details/49738023)
+##转载自:郭霖大神的[http://blog.csdn.net/guolin_blog/article/details/49738023](http://blog.csdn.net/guolin_blog/article/details/49738023)
 
 ----------
 
