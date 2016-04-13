@@ -23,8 +23,8 @@ tag:
 ##混淆   
 本篇文章中介绍的混淆技术都是基于Android Studio的，Eclipse的用法也基本类似，但是就不再为Eclipse专门做讲解了。 
 我们要建立一个Android Studio项目，并在项目中添加一些能够帮助我们理解混淆知识的代码。这里我准备好了一些，我们将它们添加到Android Studio当中。 
-首先新建一个MyFragment类，代码如下所示：
 
+首先新建一个MyFragment类，代码如下所示：
 ```
 public class MyFragment extends Fragment {
 
@@ -168,11 +168,14 @@ release {
 ```  
 
 其中minifyEnabled用于设置是否启用混淆，proguardFiles用于选定混淆配置文件。注意这里是在release闭包内进行配置的，因此只有打出正式版的APK才会进行混淆，Debug版的APK是不会混淆的。当然这也是非常合理的，因为Debug版的APK文件我们只会用来内部测试，不用担心被人破解。 
+
 那么现在我们来打一个正式版的APK文件，在Android Studio导航栏中点击Build->Generate Signed APK，然后选择签名文件并输入密码，如果没有签名文件就创建一个，最终点击Finish完成打包，生成的APK文件会自动存放在app目录下。除此之外也可以在build.gradle文件当中添加签名文件配置，然后通过gradlew assembleRelease来打出一个正式版的APK文件，这种方式APK文件会自动存放在app/build/outputs/apk目录下。 
+
 那么现在已经得到了APK文件，接下来就用上篇文章中学到的反编译知识来对这个文件进行反编译吧，结果如下图所示：        
 ![img]()   
 
 很明显可以看出，我们的代码混淆功能已经生效了。 
+
 下面我们尝试来阅读一下这个混淆过后的代码，最顶层的包名结构主要分为三部分，第一个a.a已经被混淆的面目全非了，但是可以猜测出这个包下是LitePal的所有代码。第二个android.support可以猜测出是我们引用的android support库的代码，第三个com.example.guolin.androidtest则很明显就是我们项目的主包名了，下面将里面所有的类一个个打开看一下。 
 首先MainActivity中的代码如下所示：        
 ![img]()
@@ -322,30 +325,225 @@ c类中只有一个a方法，从字符串的内容我们可以看出，这个是
 
 好了，这就是proguard-android.txt文件中所有默认的配置，而我们混淆代码也是按照这些配置的规则来进行混淆的。经过我上面的讲解之后，相信大家对这些配置的内容基本都能理解了。不过proguard语法中还真有几处非常难理解的地方，我自己也是研究了好久才搞明白，下面和大家分享一下这些难懂的语法部分。 
 proguard中一共有三组六个keep关键字，很多人搞不清楚它们的区别，这里我们通过一个表格来直观地看下：
+| 关键字       | 描述    |  
+| --------   | :-----: |
+|keep	|保留类和类中的成员，防止它们被混淆或移除。|
+|keepnames	|保留类和类中的成员，防止它们被混淆，但当成员没有被引用时会被移除。|
+|keepclassmembers	|只保留类中的成员，防止它们被混淆或移除。|
+|keepclassmembernames	|只保留类中的成员，防止它们被混淆，但当成员没有被引用时会被移除。|
+|keepclasseswithmembers	|保留类和类中的成员，防止它们被混淆或移除，前提是指名的类中的成员必须存在，如果不存在则还是会混淆。|
+|keepclasseswithmembernames |	保留类和类中的成员，防止它们被混淆，但当成员没有被引用时会被移除，前提是指名的类中的成员必须存在，如果不存在则还是会混淆。|
+
+除此之外，proguard中的通配符也比较让人难懂，proguard-android.txt中就使用到了很多通配符，我们来看一下它们之间的区别：  
+| 通配符       | 描述    |  
+| --------   | :-----: |
+|<field>	 |匹配类中的所有字段|
+|<method> |	匹配类中的所有方法|
+|<init>	 |匹配类中的所有构造函数|
+|*	|匹配任意长度字符，但不含包名分隔符(.)。比如说我们的完整类名是com.example.test.MyActivity，使用com.*，或者com.exmaple.*都是无法匹配的，因为*无法匹配包名中的分隔符，正确的匹配方式是com.exmaple.*.*，或者com.exmaple.test.*，这些都是可以的。但如果你不写任何其它内容，只有一个*，那就表示匹配所有的东西。|
+|**	|匹配任意长度字符，并且包含包名分隔符(.)。比如proguard-android.txt中使用的-dontwarn android.support.**就可以匹配android.support包下的所有内容，包括任意长度的子包。|
+|***	|匹配任意参数类型。比如void set*(***)就能匹配任意传入的参数类型，*** get*()就能匹配任意返回值的类型。|
+|…	 |匹配任意长度的任意类型参数。比如void test(…)就能匹配任意void test(String a)或者是void test(int a, String b)这些方法。|   
+
+虽说上面表格已经解释的很详细了，但是很多人对于keep和keepclasseswithmembers这两个关键字的区别还是搞不懂。确实，它们之间用法有点太像了，我做了很多次试验它们的结果都是相同的。其实唯一的区别就在于类中声明的成员存不存在，我们还是通过一个例子来直接地看一下，先看keepclasseswithmember关键字：
+```
+-keepclasseswithmember class * {
+    native <methods>;
+}
+```   
+
+这段代码的意思其实很明显，就是保留所有含有native方法的类的类名和native方法名，而如果某个类中没有含有native方法，那就还是会被混淆。 
+但是如果改成keep关键字，结果会完全不一样：
+```
+-keep class * {
+    native <methods>;
+}
+```    
+
+使用keep关键字后，你会发现代码中所有类的类名都不会被混淆了，因为keep关键字看到class *就认为应该将所有类名进行保留，而不会关心该类中是否含有native方法。当然这样写只会保证类名不会被混淆，类中的成员还是会被混淆的。 
+比较难懂的用法大概就这些吧，掌握了这些内容之后我们就能继续前进了。 
+
+回到Android Studio项目当中，刚才打出的APK虽然已经成功混淆了，但是混淆的规则都是按照proguard-android.txt中默认的规则来的，当然我们也可以修改proguard-android.txt中的规则，但是直接在proguard-android.txt中修改会对我们本机上所有项目的混淆规则都生效，那么有没有什么办法只针对当前项目的混淆规则做修改呢？当然是有办法的了，你会发现任何一个Android Studio项目在app模块目录下都有一个proguard-rules.pro文件，这个文件就是用于让我们编写只适用于当前项目的混淆规则的，那么接下来我们就利用刚才学到的所有知识来对混淆规则做修改吧。 
+这里我们先列出来要实现的目标：
+
++ 对MyFragment类进行完全保留，不混淆其类名、方法名、以及变量名。
++ 对Utils类中的未调用方法进行保留，防止其被移除掉。
++ 对第三方库进行保留，不混淆android-support库，以及LitePal库中的代码。  
+
+ 下面我们就来逐一实现这些目标。 
+首先要对MyFragment类进行完全保留可以使用keep关键字，keep后声明完整的类名，然后保留类中的所有内容可以使用*通配符实现，如下所示：
+```
+-keep class com.example.guolin.androidtest.MyFragment {
+    *;
+}
+``` 
+
+然后保留Utils类中的未调用方法可以使用keepclassmembers关键字，后跟Utils完整类名，然后在内部声明未调用的方法，如下所示：
+```
+-keepclassmembers class com.example.guolin.androidtest.Utils {
+    public void methodUnused();
+}
+```
+
+最后不要混淆第三方库，目前我们使用了两种方式来引入第三方库，一种是通过本地jar包引入的，一种是通过remote引入的，其实这两种方式没什么区别，要保留代码都可以使用**这种通配符来实现，如下所示：
+```
+-keep class org.litepal.** {
+    *;
+}
+
+-keep class android.support.** {
+    *;
+}
+```  
+
+所有内容都在这里了，现在我们重新打一个正式版的APK文件，然后再反编译看看效果：         
+![img]()
+
+可以看到，现在android-support包中所有代码都被保留下来了，不管是包名、类名、还是方法名都没有被混淆。LitePal中的代码也是同样的情况：        
+![img]()
+
+再来看下MyFragment中的代码，如下所示：        
+![img]()
+
+可以看到，MyFragment中的代码也没有被混淆，按照我们的要求被完全保留下来了。 
+最后再来看一下Utils类中的代码：      
+![img]()  
+
+很明显，Utils类并没有被完全保留下来，类名还是被混淆了，methodNormal()方法也被混淆了，但是methodUnused()没有被混淆，当然也没有被移除，因为我们的混淆配置生效了。 
+经过这些例子的演示，相信大家已经对Proguard的用法有了相当不错的理解了，那么根据自己的业务需求来去编写混淆配置相信也不是什么难事了吧？ 
+Progaurd的使用非常灵活，基本上能够覆盖你所能想到的所有业务逻辑。这里再举个例子，之前一直有人问我使用LitePal时的混淆配置怎么写，其实真的很简单，LitePal作为开源库并不需要混淆，上面的配置已经演示了如何不混淆LitePal代码，然后所有代码中的Model是需要进行反射的，也不能混淆，那么只需要这样写就行了：
+```
+-keep class * extends org.litepal.crud.DataSupport {
+    *;
+}
+```   
+
+因为LitePal中所有的Model都是应该继承DataSupport类的，所以这里我们将所有继承自DataSupport的类都进行保留就可以了。 
+
+关于混淆APK的用法就讲这么多，如果你还想继续了解关于Proguard的更多用法，可以参考官方文档：[http://proguard.sourceforge.net/index.html#manual/usage.html](http://proguard.sourceforge.net/index.html#manual/usage.html)   
 
 
+##混淆Jar
 
+在本篇文章的第二部分我想讲一讲混淆Jar包的内容，因为APK不一定是我们交付的唯一产品。就比如说我自己，我在公司是负责写SDK的，对于我来说交付出去的产品就是Jar包，而如果Jar包不混淆的话将会很容易就被别人反编译出来，从而泄漏程序逻辑。 
+实际上Android对混淆Jar包的支持在很早之前就有了，不管你使用多老版本的SDK，都能在 <Android SDK>/tools目录下找到proguard这个文件夹。然后打开里面的bin目录，你会看到如下文件：      
+![img]()   
 
+其中proguardgui.bat文件是允许我们以图形化的方式来对Jar包进行混淆的一个工具，今天我们就来讲解一下这个工具的用法。 
+在开始讲解这个工具之前，首先我们需要先准备一个Jar包，当然你从哪里搞到一个Jar包都是可以的，不过这里为了和刚才的混淆逻辑统一，我们就把本篇文章中的项目代码打成一个Jar包吧。 
 
+Eclipse中导出Jar包的方法非常简单，相信所有人都会，可是Android Studio当中就比较让人头疼了，因为Android Studio并没有提供一个专门用于导出Jar包的工具，因此我们只能自己动手了。 
 
+我们需要知道，任何一个Android Studio项目，只要编译成功之后就会在项目模块的build/intermediates/classes/debug目录下生成代码编译过后的class文件，因此只需通过打包命令将这些class文件打包成Jar包就行了，打开cmd，切换到项目的根目录，然后输入如下命令：
+```
+jar -cvf androidtest.jar -C app/build/intermediates/classes/debug .
+```    
 
+在项目的根目录下就会生成androidtest.jar这个文件，这样我们就把Jar包准备好了。 
+现在双击proguardgui.bat打开混淆工具，如果是Mac或Ubuntu系统则使用sh proguardgui.sh命令打开混淆工具，界面如下图所示：      
+![img]()
 
+其实从主界面上我们就能看出，这个Proguard工具支持Shrinking、Optimization、Obfuscation、Preverification四项操作，在左侧的侧边栏上也能看到相应的这些选项。Proguard的工作机制仍然还是要依赖于配置文件，当然我们也可以通过proguardgui工具来生成配置文件，不过由于配置选项太多了，每个都去一一设置太复杂，而且大多数还都是我们用不到的配置。因此最简单的方式就是直接拿现有的配置文件，然后再做些修改就行了。 
 
+那么我们从<Android SDK>/tools/proguard目录下将proguard-android.txt文件复制一份出来，然后点击主界面上的Load configuration按钮来加载复制出来的这份proguard-android.txt文件，完成后点击Next将进入Input/Output界面。 
+Input/Output界面是用于导入要混淆的Jar包、配置混淆后文件的输出路径、以及导入该Jar包所依赖的所有其它Jar包的。我们要混淆的当然就是androidtest.jar这个文件，那么这个Jar包又依赖了哪些Jar包呢？这里就需要整理一下了。
 
++ 首先我们写的都是Java代码，Java代码的运行要基于Jre基础之上，没有Jre计算机将无法识别Java的语法，因此第一个要依赖的就是Jre的rt.jar。
++ 然后由于我们导出的Jar包中有Android相关的代码，比如Activity、Fragment等，因此还需要添加Android的编译库，android.jar。
++ 除此之外，我们使用的AppCompatActivity和Fragment分别来自于appcompat-v7包和support-v4包，那么这两个Jar包也是需要引入的。
++ 最后就是代码中还引入了litepal-1.3.1.jar。
 
+整理清楚了之后我们就来一个个添加，Input/Output有上下两个操作界面，上面是用于导入要混淆的Jar包和配置混淆后文件的输出路径的，下面则是导入该Jar包所依赖的所有其它Jar包的，全部导入后结果如下图所示：       
+![img]()   
 
+这些依赖的Jar包所存在的路径每台电脑都不一样，你所需要做的就是在你自己的电脑上成功找到这些依赖的Jar包并导入即可。 
 
+不过细心的朋友可能会发现，我在上面整理出了五个依赖的Jar包，但是在图中却添加了六个。这是我在写这篇文章时碰到的一个新的坑，也是定位了好久才解决的，我觉得有必要重点提一下。由于我平时混淆Jar包时里面很少会有Activity，所以没遇到过这个问题，但是本篇文章中的演示Jar包中不仅包含了Activty，还是继承自AppCompatActivity的。而AppCompatActivity的继承结构并不简单，如下图所示：      
+![img]()
 
+其中AppCompatActivity是在appcompat-v7包中的，它的父类FragmentActivity是在support-v4包中的，这两个包我们都已经添加依赖了。但是FragmentActivity的父类就坑爹了，如果你去看BaseFragmentActivityHoneycomb和BaseFragmentActivityDonut这两个类的源码，你会发现它们都是在support-v4包中的：    
+![img]()   
 
+可是如果你去support-v4的Jar包中找一下，你会发现压根就没有这两个类，所以我当时一直混淆报错就是因为这两个类不存在，继承结构在这里断掉了。而这两个类其实被规整到了另外一个internal的Jar包中，所以当你要混淆的Jar包中有Activity，并且还是继承自AppCompatActivity或FragmentActivity的话，那么就一定要记得导入这个internal Jar包的依赖，如下图所示：     
+![img]()
 
+接下来点击Next进入Shrink界面，这个界面没什么需要配置的东西，但记得要将Shrink选项钩掉，因为我们这个Jar包是独立存在的，没有任何项目引用，如果钩中Shrink选项的话就会认为我们所有的代码都是无用的，从而把所有代码全压缩掉，导出一个空的Jar包。 
+继续点击Next进入Obfuscation界面，在这里可以添加一些混淆的逻辑，和混淆APK时不同的是，这里并不会自动帮我们排除混淆四大组件，因此必须要手动声明一下才行。点击最下方的Add按钮，然后在弹出的界面上编写排除逻辑，如下图所示：      
+![img]()
 
+很简单，就是在继承那一栏写上android.app.Activity就行了，其它的组件原理也相同。 
 
+继续点击Next进入Optimiazation界面，不用修改任何东西，因为我们本身就不启用Optimization功能。继续点击Next进入Information界面，也不用修改任何东西，因为我们也不启用Preverification功能。 
 
+接着点击Next，进入Process界面，在这里可以通过点击View configuration按钮来预览一下目前我们的混淆配置文件，内容如下所示：  
+```
+-injars /Users/guolin/AndroidStudioProjects/AndroidTest/androidtest.jar
+-outjars /Users/guolin/androidtest_obfuscated.jar
 
+-libraryjars /Library/Java/JavaVirtualMachines/jdk1.7.0_79.jdk/Contents/Home/jre/lib/rt.jar
+-libraryjars /Users/guolin/Library/Android/sdk/platforms/android-23/android.jar
+-libraryjars /Users/guolin/AndroidStudioProjects/AndroidTest/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.2.0/jars/classes.jar
+-libraryjars /Users/guolin/AndroidStudioProjects/AndroidTest/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.2.0/jars/classes.jar
+-libraryjars /Users/guolin/AndroidStudioProjects/AndroidTest/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.2.0/jars/libs/internal_impl-23.2.0.jar
+-libraryjars /Users/guolin/AndroidStudioProjects/AndroidTest/app/libs/litepal-1.3.1.jar
 
+-dontshrink
+-dontoptimize
+-dontusemixedcaseclassnames
+-keepattributes *Annotation*
+-dontpreverify
+-verbose
+-dontwarn android.support.**
 
+-keep public class com.google.vending.licensing.ILicensingService
 
+-keep public class com.android.vending.licensing.ILicensingService
 
+# keep setters in Views so that animations can still work.
+# see http://proguard.sourceforge.net/manual/examples.html#beans
+-keepclassmembers public class * extends android.view.View {
+    void set*(***);
+    *** get*();
+}
+
+# We want to keep methods in Activity that could be used in the XML attribute onClick
+-keepclassmembers class * extends android.app.Activity {
+    public void *(android.view.View);
+}
+
+-keepclassmembers class * extends android.os.Parcelable {
+    public static final android.os.Parcelable$Creator CREATOR;
+}
+
+-keepclassmembers class **.R$* {
+    public static <fields>;
+}
+
+-keep class * extends android.app.Activity
+
+-keep class * extends android.app.Service
+
+-keep class * extends android.content.BroadcastReceiver
+
+-keep class * extends android.content.ContentProvider
+
+# Also keep - Enumerations. Keep the special static methods that are required in
+# enumeration classes.
+-keepclassmembers enum  * {
+    public static **[] values();
+    public static ** valueOf(java.lang.String);
+}
+
+# Keep names - Native method names. Keep all native class/method names.
+-keepclasseswithmembers,allowshrinking class * {
+    native <methods>;
+}
+```
+
+恩，由此可见其实GUI工具只是给我们提供了一个方便操作的平台，背后工作的原理还是通过这些配置来实现的，相信上面的配置内容大家应该都能看得懂了吧。 
+接下来我们还可以点击Save configuration按钮来保存一下当前的配置文件，这样下次混淆的时候就可以直接Load进来而不用修改任何东西了。 
+最后点击Process!按钮来开始混淆处理，中间会提示一大堆的Note信息，我们不用理会，只要看到最终显示Processing completed successfully，就说明混淆Jar包已经成功了，如下图所示：      
+![img]()
 
 混淆后的文件我将它配置在了/Users/guolin/androidtest_obfuscated.jar这里，如果反编译一下这个文件，你会发现和刚才反编译APK得到的结果是差不多的：MainActivity的类名以及从父类继承的方法名不会被混淆，NativeUtils的类名和其中的native方法名不会被混淆，Utils的methodUnsed方法不会被移除，因为我们禁用了Shrink功能，其余的代码都会被混淆。
 
