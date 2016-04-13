@@ -340,7 +340,7 @@ proguard中一共有三组六个keep关键字，很多人搞不清楚它们的�
 |<field>	 |匹配类中的所有字段|
 |<method> |	匹配类中的所有方法|
 |<init>	 |匹配类中的所有构造函数|
-|*	|匹配任意长度字符，但不含包名分隔符(.)。比如说我们的完整类名是com.example.test.MyActivity，使用com.*，或者com.exmaple.*都是无法匹配的，因为*无法匹配包名中的分隔符，正确的匹配方式是com.exmaple.*.*，或者com.exmaple.test.*，这些都是可以的。但如果你不写任何其它内容，只有一个*，那就表示匹配所有的东西。|
+| *	    | 匹配任意长度字符，但不含包名分隔符(.)。比如说我们的完整类名是com.example.test.MyActivity，使用com.*，或者com.exmaple.*都是无法匹配的，因为*无法匹配包名中的分隔符，正确的匹配方式是com.exmaple.*.*，或者com.exmaple.test.*，这些都是可以的。但如果你不写任何其它内容，只有一个*，那就表示匹配所有的东西。|
 |**	|匹配任意长度字符，并且包含包名分隔符(.)。比如proguard-android.txt中使用的-dontwarn android.support.**就可以匹配android.support包下的所有内容，包括任意长度的子包。|
 |***	|匹配任意参数类型。比如void set*(***)就能匹配任意传入的参数类型，*** get*()就能匹配任意返回值的类型。|
 |…	 |匹配任意长度的任意类型参数。比如void test(…)就能匹配任意void test(String a)或者是void test(int a, String b)这些方法。|   
@@ -370,7 +370,7 @@ proguard中一共有三组六个keep关键字，很多人搞不清楚它们的�
 + 对Utils类中的未调用方法进行保留，防止其被移除掉。
 + 对第三方库进行保留，不混淆android-support库，以及LitePal库中的代码。  
 
- 下面我们就来逐一实现这些目标。 
+下面我们就来逐一实现这些目标。 
 首先要对MyFragment类进行完全保留可以使用keep关键字，keep后声明完整的类名，然后保留类中的所有内容可以使用*通配符实现，如下所示：
 ```
 -keep class com.example.guolin.androidtest.MyFragment {
