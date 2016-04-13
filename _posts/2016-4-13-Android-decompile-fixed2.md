@@ -338,13 +338,13 @@ proguard中一共有三组六个keep关键字，很多人搞不清楚它们的�
 
 | 通配符       | 描述    |  
 | --------   | :-----: |
-|<field>	 |匹配类中的所有字段|
-|<method> |	匹配类中的所有方法|
-|<init>	 |匹配类中的所有构造函数|
-| *	    | 匹配任意长度字符，但不含包名分隔符(.)。比如说我们的完整类名是com.example.test.MyActivity，使用com.*，或者com.exmaple.*都是无法匹配的，因为*无法匹配包名中的分隔符，正确的匹配方式是com.exmaple.*.*，或者com.exmaple.test.*，这些都是可以的。但如果你不写任何其它内容，只有一个*，那就表示匹配所有的东西。|
-|**	|匹配任意长度字符，并且包含包名分隔符(.)。比如proguard-android.txt中使用的-dontwarn android.support.**就可以匹配android.support包下的所有内容，包括任意长度的子包。|
-|***	|匹配任意参数类型。比如void set*(***)就能匹配任意传入的参数类型，*** get*()就能匹配任意返回值的类型。|
-|…	 |匹配任意长度的任意类型参数。比如void test(…)就能匹配任意void test(String a)或者是void test(int a, String b)这些方法。|   
+|  <field>	 |匹配类中的所有字段|
+|  <method>  |	匹配类中的所有方法|
+|  <init>	 |匹配类中的所有构造函数|
+| *	       | 匹配任意长度字符，但不含包名分隔符(.)。比如说我们的完整类名是com.example.test.MyActivity，使用com.*，或者com.exmaple.*都是无法匹配的，因为*无法匹配包名中的分隔符，正确的匹配方式是com.exmaple.*.*，或者com.exmaple.test.*，这些都是可以的。但如果你不写任何其它内容，只有一个*，那就表示匹配所有的东西。|
+|**	      |匹配任意长度字符，并且包含包名分隔符(.)。比如proguard-android.txt中使用的-dontwarn android.support.**就可以匹配android.support包下的所有内容，包括任意长度的子包。|
+|***	      |匹配任意参数类型。比如void set*(***)就能匹配任意传入的参数类型，*** get*()就能匹配任意返回值的类型。|
+|…	         |匹配任意长度的任意类型参数。比如void test(…)就能匹配任意void test(String a)或者是void test(int a, String b)这些方法。|   
 
 
 虽说上面表格已经解释的很详细了，但是很多人对于keep和keepclasseswithmembers这两个关键字的区别还是搞不懂。确实，它们之间用法有点太像了，我做了很多次试验它们的结果都是相同的。其实唯一的区别就在于类中声明的成员存不存在，我们还是通过一个例子来直接地看一下，先看keepclasseswithmember关键字：
