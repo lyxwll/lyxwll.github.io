@@ -170,30 +170,30 @@ release {
 那么现在我们来打一个正式版的APK文件，在Android Studio导航栏中点击Build->Generate Signed APK，然后选择签名文件并输入密码，如果没有签名文件就创建一个，最终点击Finish完成打包，生成的APK文件会自动存放在app目录下。除此之外也可以在build.gradle文件当中添加签名文件配置，然后通过gradlew assembleRelease来打出一个正式版的APK文件，这种方式APK文件会自动存放在app/build/outputs/apk目录下。 
 
 那么现在已经得到了APK文件，接下来就用上篇文章中学到的反编译知识来对这个文件进行反编译吧，结果如下图所示：        
-![img]()   
+![img](/img/2016-4-13/036.png)   
 
 很明显可以看出，我们的代码混淆功能已经生效了。 
 
 下面我们尝试来阅读一下这个混淆过后的代码，最顶层的包名结构主要分为三部分，第一个a.a已经被混淆的面目全非了，但是可以猜测出这个包下是LitePal的所有代码。第二个android.support可以猜测出是我们引用的android support库的代码，第三个com.example.guolin.androidtest则很明显就是我们项目的主包名了，下面将里面所有的类一个个打开看一下。 
 首先MainActivity中的代码如下所示：        
-![img]()
+![img](/img/2016-4-13/037.png)
 
 可以看到，MainActivity的类名是没有混淆的，onCreate()方法也没有被混淆，但是我们定义的方法、全局变量、局部变量都被混淆了。 
 再来打开下一个类NativeUtils，如下所示：          
-![img]()   
+![img](/img/2016-4-13/038.png)   
 
 NativeUtils的类名没有被混淆，其中声明成native的方法也没有被混淆，但是非native方法的方法名和局部变量都被混淆了。 
 接下来是a类的代码，如下所示：       
-![img]()
+![img](/img/2016-4-13/039.png)
 
 很明显，这个是MainActivity中按钮点击事件的匿名类，在onClick()方法中的调用代码虽然都被混淆了，但是调用顺序是不会改变的，对照源代码就可以看出哪一行是调用的什么方法了。 
 
 再接下来是b类，代码如下所示：       
-![img]()   
+![img](/img/2016-4-13/040.png)   
 
 虽然被混淆的很严重，但是我们还是可以看出这个是MyFragment类。其中所有的方法名、全局变量、局部变量都被混淆了。 
 最后再来看下c类，代码如下所示：      
-![img]()
+![img](/img/2016-4-13/041.png)
 
 c类中只有一个a方法，从字符串的内容我们可以看出，这个是Utils类中的methodNormal()方法。
 
@@ -399,17 +399,17 @@ proguard中一共有三组六个keep关键字，很多人搞不清楚它们的�
 ```  
 
 所有内容都在这里了，现在我们重新打一个正式版的APK文件，然后再反编译看看效果：         
-![img]()
+![img](/img/2016-4-13/023.png)
 
 可以看到，现在android-support包中所有代码都被保留下来了，不管是包名、类名、还是方法名都没有被混淆。LitePal中的代码也是同样的情况：        
-![img]()
+![img](/img/2016-4-13/024.png)
 
 再来看下MyFragment中的代码，如下所示：        
-![img]()
+![img](/img/2016-4-13/025.png)
 
 可以看到，MyFragment中的代码也没有被混淆，按照我们的要求被完全保留下来了。 
 最后再来看一下Utils类中的代码：      
-![img]()  
+![img](/img/2016-4-13/026.png)  
 
 很明显，Utils类并没有被完全保留下来，类名还是被混淆了，methodNormal()方法也被混淆了，但是methodUnused()没有被混淆，当然也没有被移除，因为我们的混淆配置生效了。 
 经过这些例子的演示，相信大家已经对Proguard的用法有了相当不错的理解了，那么根据自己的业务需求来去编写混淆配置相信也不是什么难事了吧？ 
@@ -429,7 +429,7 @@ Progaurd的使用非常灵活，基本上能够覆盖你所能想到的所有业
 
 在本篇文章的第二部分我想讲一讲混淆Jar包的内容，因为APK不一定是我们交付的唯一产品。就比如说我自己，我在公司是负责写SDK的，对于我来说交付出去的产品就是Jar包，而如果Jar包不混淆的话将会很容易就被别人反编译出来，从而泄漏程序逻辑。 
 实际上Android对混淆Jar包的支持在很早之前就有了，不管你使用多老版本的SDK，都能在 <Android SDK>/tools目录下找到proguard这个文件夹。然后打开里面的bin目录，你会看到如下文件：      
-![img]()   
+![img](/img/2016-4-13/027.png)   
 
 其中proguardgui.bat文件是允许我们以图形化的方式来对Jar包进行混淆的一个工具，今天我们就来讲解一下这个工具的用法。 
 在开始讲解这个工具之前，首先我们需要先准备一个Jar包，当然你从哪里搞到一个Jar包都是可以的，不过这里为了和刚才的混淆逻辑统一，我们就把本篇文章中的项目代码打成一个Jar包吧。 
@@ -443,7 +443,7 @@ jar -cvf androidtest.jar -C app/build/intermediates/classes/debug .
 
 在项目的根目录下就会生成androidtest.jar这个文件，这样我们就把Jar包准备好了。 
 现在双击proguardgui.bat打开混淆工具，如果是Mac或Ubuntu系统则使用sh proguardgui.sh命令打开混淆工具，界面如下图所示：      
-![img]()
+![img](/img/2016-4-13/028.jpg)
 
 其实从主界面上我们就能看出，这个Proguard工具支持Shrinking、Optimization、Obfuscation、Preverification四项操作，在左侧的侧边栏上也能看到相应的这些选项。Proguard的工作机制仍然还是要依赖于配置文件，当然我们也可以通过proguardgui工具来生成配置文件，不过由于配置选项太多了，每个都去一一设置太复杂，而且大多数还都是我们用不到的配置。因此最简单的方式就是直接拿现有的配置文件，然后再做些修改就行了。 
 
@@ -456,22 +456,22 @@ Input/Output界面是用于导入要混淆的Jar包、配置混淆后文件的�
 + 最后就是代码中还引入了litepal-1.3.1.jar。
 
 整理清楚了之后我们就来一个个添加，Input/Output有上下两个操作界面，上面是用于导入要混淆的Jar包和配置混淆后文件的输出路径的，下面则是导入该Jar包所依赖的所有其它Jar包的，全部导入后结果如下图所示：       
-![img]()   
+![img](/img/2016-4-13/029.jpg)   
 
 这些依赖的Jar包所存在的路径每台电脑都不一样，你所需要做的就是在你自己的电脑上成功找到这些依赖的Jar包并导入即可。 
 
 不过细心的朋友可能会发现，我在上面整理出了五个依赖的Jar包，但是在图中却添加了六个。这是我在写这篇文章时碰到的一个新的坑，也是定位了好久才解决的，我觉得有必要重点提一下。由于我平时混淆Jar包时里面很少会有Activity，所以没遇到过这个问题，但是本篇文章中的演示Jar包中不仅包含了Activty，还是继承自AppCompatActivity的。而AppCompatActivity的继承结构并不简单，如下图所示：      
-![img]()
+![img](/img/2016-4-13/030.png)
 
 其中AppCompatActivity是在appcompat-v7包中的，它的父类FragmentActivity是在support-v4包中的，这两个包我们都已经添加依赖了。但是FragmentActivity的父类就坑爹了，如果你去看BaseFragmentActivityHoneycomb和BaseFragmentActivityDonut这两个类的源码，你会发现它们都是在support-v4包中的：    
-![img]()   
+![img](/img/2016-4-13/031.jpg)   
 
 可是如果你去support-v4的Jar包中找一下，你会发现压根就没有这两个类，所以我当时一直混淆报错就是因为这两个类不存在，继承结构在这里断掉了。而这两个类其实被规整到了另外一个internal的Jar包中，所以当你要混淆的Jar包中有Activity，并且还是继承自AppCompatActivity或FragmentActivity的话，那么就一定要记得导入这个internal Jar包的依赖，如下图所示：     
-![img]()
+![img](/img/2016-4-13/032.jpg)   
 
 接下来点击Next进入Shrink界面，这个界面没什么需要配置的东西，但记得要将Shrink选项钩掉，因为我们这个Jar包是独立存在的，没有任何项目引用，如果钩中Shrink选项的话就会认为我们所有的代码都是无用的，从而把所有代码全压缩掉，导出一个空的Jar包。 
 继续点击Next进入Obfuscation界面，在这里可以添加一些混淆的逻辑，和混淆APK时不同的是，这里并不会自动帮我们排除混淆四大组件，因此必须要手动声明一下才行。点击最下方的Add按钮，然后在弹出的界面上编写排除逻辑，如下图所示：      
-![img]()
+![img](/img/2016-4-13/033.jpg)   
 
 很简单，就是在继承那一栏写上android.app.Activity就行了，其它的组件原理也相同。 
 
@@ -545,7 +545,7 @@ Input/Output界面是用于导入要混淆的Jar包、配置混淆后文件的�
 恩，由此可见其实GUI工具只是给我们提供了一个方便操作的平台，背后工作的原理还是通过这些配置来实现的，相信上面的配置内容大家应该都能看得懂了吧。 
 接下来我们还可以点击Save configuration按钮来保存一下当前的配置文件，这样下次混淆的时候就可以直接Load进来而不用修改任何东西了。 
 最后点击Process!按钮来开始混淆处理，中间会提示一大堆的Note信息，我们不用理会，只要看到最终显示Processing completed successfully，就说明混淆Jar包已经成功了，如下图所示：      
-![img]()
+![img](/img/2016-4-13/035.jpg)   
 
 混淆后的文件我将它配置在了/Users/guolin/androidtest_obfuscated.jar这里，如果反编译一下这个文件，你会发现和刚才反编译APK得到的结果是差不多的：MainActivity的类名以及从父类继承的方法名不会被混淆，NativeUtils的类名和其中的native方法名不会被混淆，Utils的methodUnsed方法不会被移除，因为我们禁用了Shrink功能，其余的代码都会被混淆。
 
