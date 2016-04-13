@@ -72,11 +72,10 @@ activity_main.xml中的资源如下所示：
 
 要想将APK文件中的代码反编译出来，我们需要用到以下两款工具：
 
-> * dex2jar 这个工具用于将dex文件转换成jar文件        
-
++ dex2jar 这个工具用于将dex文件转换成jar文件        
 下载地址：[http://sourceforge.net/projects/dex2jar/files/](http://sourceforge.net/projects/dex2jar/files/)
 
-> * jd-gui 这个工具用于将jar文件转换成java代码 
++ jd-gui 这个工具用于将jar文件转换成java代码 
 
 下载地址：[http://jd.benow.ca/](http://jd.benow.ca/)
 将这两个工具都下载好并解压，然后我们就开始对Demo程序进行反编译。解压dex2jar压缩包后，你会发现有很多个文件，如下图所示：     
