@@ -16,6 +16,8 @@ tag:
 
 转载自:[http://niorgai.github.io/2015/03/03/Android内存泄漏/](http://niorgai.github.io/2015/03/03/Android内存泄漏/)
 
+-------
+
 以下内容提取于[Android进程的内存管理分析](http://blog.csdn.net/gemmem/article/details/8920039)及[Android内存泄漏分析及调试](http://blog.csdn.net/gemmem/article/details/13017999).
 
 Android中的内存分为：
