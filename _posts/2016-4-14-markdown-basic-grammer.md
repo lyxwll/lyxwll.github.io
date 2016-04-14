@@ -12,6 +12,16 @@ tag:
 
 #使用Markdown的基本语法
 
+
+**快捷方式**
+
+- **Bold** (`Ctrl+B`) and *Italic* (`Ctrl+I`)
+- Quotes (`Ctrl+Q`)
+- Code blocks (`Ctrl+K`)
+- Headings 1, 2, 3 (`Ctrl+1`, `Ctrl+2`, `Ctrl+3`)
+- Lists (`Ctrl+U` and `Ctrl+Shift+O`)
+
+
 ## 主要内容 ##
 > #### Markdown是_什么_？ ####
 > #### _谁_发明了这么个东西？ ####
