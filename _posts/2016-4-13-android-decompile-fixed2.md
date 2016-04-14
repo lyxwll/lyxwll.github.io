@@ -1,6 +1,6 @@
 ---
 layout:     post
-title:      "Android安全攻防战，反编译与混淆技术完全解析（下）" 
+title:      "反编译与混淆技术完全解析（下）" 
 subtitle:   " \"C'est la vie !\""
 date:       2016-04-13 15:30:00
 author:     "Wangll"
@@ -9,6 +9,8 @@ header-img: "img/ridley.jpg"
 tag:
    - Android
 ---
+
+#Android安全攻防战，反编译与混淆技术完全解析（下）
 
 
 ##转载自:[郭霖](http://guolin.tech/)大神的[http://blog.csdn.net/guolin_blog/article/details/50451259](http://blog.csdn.net/guolin_blog/article/details/50451259)
