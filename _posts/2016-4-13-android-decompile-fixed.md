@@ -23,7 +23,8 @@ tag:
 
 在开始学习之前，首先我们需要准备一个APK文件，为了尊重所有开发者，我就不拿任何一个市面上的软件来演示了，而是自己写一个Demo用来测试。 
 这里我希望代码越简单越好，因此我们建立一个新项目，在Activity里加入一个按钮，当点击按钮时弹出一个Toast，就这么简单，代码如下所示：
-```
+```java
+
  public class MainActivity extends AppCompatActivity {
 
     @Override
