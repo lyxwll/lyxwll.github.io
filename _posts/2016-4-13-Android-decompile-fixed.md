@@ -1,14 +1,15 @@
 ---
 layout:     post
-title:      "Android安全攻防战，反编译与混淆技术完全解析（上）" 
+title:      "反编译与混淆技术完全解析（上）" 
 subtitle:   " \"C'est la vie !\""
 date:       2016-04-13 14:53:00
 author:     "Wangll"
 header-img: "img/emily.jpg"
-
 tag:
    - Android
 ---
+
+#Android安全攻防战，反编译与混淆技术完全解析（上）
 
 
 ##转载自:[郭霖](http://guolin.tech/)大神的[http://blog.csdn.net/guolin_blog/article/details/49738023](http://blog.csdn.net/guolin_blog/article/details/49738023)
