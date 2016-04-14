@@ -25,7 +25,8 @@ tag:
 我们要建立一个Android Studio项目，并在项目中添加一些能够帮助我们理解混淆知识的代码。这里我准备好了一些，我们将它们添加到Android Studio当中。 
 
 首先新建一个MyFragment类，代码如下所示：
-```
+```java
+
 public class MyFragment extends Fragment {
 
     private String toastTip = "toast in MyFragment";
@@ -53,7 +54,8 @@ public class MyFragment extends Fragment {
 
 可以看到，MyFragment是继承自Fragment的，并且MyFragment中有一个全局变量。onCreateView()方法是Fragment的生命周期函数，这个不用多说，在onCreateView()方法中又调用了methodWithGlobalVariable()和methodWithLocalVariable()方法，这两个方法的内部分别引用了一个全局变量和一个局部变量。 
 接下来新建一个Utils类，代码如下所示：
-```
+```java
+
 public class Utils {
 
     public void methodNormal() {
@@ -72,7 +74,8 @@ public class Utils {
 
 这是一个非常普通的工具类，没有任何继承关系。Utils中有两个方法methodNormal()和methodUnused()，它们的内部逻辑都是一样的，唯一的据别是稍后methodNormal()方法会被调用，而methodUnused()方法不会被调用。 
 下面再新建一个NativeUtils类，代码如下所示：
-```
+```java
+
 public class NativeUtils {
 
     public static native void methodNative();
@@ -87,7 +90,8 @@ public class NativeUtils {
 
 这个类中同样有两个方法，一个是native方法，一个是非native方法。 
 最后，修改MainActivity中的代码，如下所示：
-```
+```java
+
 public class MainActivity extends AppCompatActivity {
 
     private String toastTip = "toast in MainActivity";
@@ -126,7 +130,8 @@ public class MainActivity extends AppCompatActivity {
 
 可以看到，MainActivity和MyFragment类似，也是定义了methodWithGlobalVariable()和methodWithLocalVariable()这两个方法，然后MainActivity对MyFragment进行了添加，并在Button的点击事件里面调用了自身的、Utils的、以及NativeUtils中的方法。注意调用native方法需要有相应的so库实现，不然的话就会报UnsatisefiedLinkError，不过这里其实我也并没有真正的so库实现，只是演示一下让大家看看混淆结果。点击事件的最后一行调用的是LitePal中的方法，因为我们还要测试一下引用第三方Jar包的场景，到LitePal项目的主页去下载最新的Jar包，然后放到libs目录下即可。 
 完整的build.gradle内容如下所示：
-```
+```java
+
 apply plugin: 'com.android.application'
 
 android {
