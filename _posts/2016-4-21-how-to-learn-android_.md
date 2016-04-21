@@ -1,3 +1,18 @@
+---
+layout:     post
+title:      "如何自学Android编程?" 
+subtitle:   "C'est la vie !"
+date:       2016-04-21 11:00:00
+author:     "Wanglili"
+header-img: "img/learn-android.jpg"
+
+tag:
+   - help
+---
+
+
+
+
 ﻿# 如何自学Android编程?
 
 
