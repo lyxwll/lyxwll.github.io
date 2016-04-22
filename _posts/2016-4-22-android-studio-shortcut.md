@@ -15,7 +15,10 @@ tag:
 #Android Studio快捷键    
 
 
-**转载自：[http://stormzhang.com/devtools/2014/12/09/android-studio-tutorial3/](http://stormzhang.com/devtools/2014/12/09/android-studio-tutorial3/)**      
+**转载自**：
+1. [http://stormzhang.com/devtools/2014/12/09/android-studio-tutorial3/](http://stormzhang.com/devtools/2014/12/09/android-studio-tutorial3/)   
+2. [http://ask.android-studio.org/?/article/12](http://ask.android-studio.org/?/article/12)
+3. [http://www.developerphil.com/android-studio-tips-of-the-day-roundup-1/](http://www.developerphil.com/android-studio-tips-of-the-day-roundup-1/)
 
 
 ##快捷键
