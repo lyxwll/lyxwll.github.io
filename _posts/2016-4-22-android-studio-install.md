@@ -1,5 +1,4 @@
 ---
-
 layout:     post
 title:      "Android Studio 的下载与安装" 
 subtitle:   " \"C'est la vie !\""
@@ -223,5 +222,8 @@ http\://services.gradle.org/distributions/gradle-x.x.x-all.zip --> http\://servi
 ![img](/img/2016-4-22/024.png) 
    
 在此页面下设置 **JDK** 或者 **Android SDK** 目录即可。  
+
+
+
 
 
