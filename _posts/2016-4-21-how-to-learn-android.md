@@ -17,7 +17,7 @@ tag:
 转载自:[http://stormzhang.com/android/2016/01/21/learn-android-byself/][1]
 
 
-**如何自学Android编程**
+**如何自学Android编程**      
 [https://www.zhihu.com/question/26417244][2]
 
 ##准备
