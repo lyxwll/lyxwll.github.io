@@ -5,8 +5,7 @@ subtitle:   ""
 date:       2015-07-14 09:00:00
 author:     "Cyzus"
 header-img: "img/code.jpg"
-tag:
-   - code
+
 ---
 
 分享一组小代码（好吧，不算是）
