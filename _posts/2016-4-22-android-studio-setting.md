@@ -33,14 +33,14 @@ tag:
 
 和Eclipse的区别有如下：
 
-- 1、Studio中有Project和Module的概念，前面说到Studio中一个窗口只能有一个项目，即Project，代表一个workspace，但是一个Project可以包含多个Module，比如你项目引用的Android Library, Java Library等，这些都可以看做是一个Module;
+- 1、Studio中有**Project** 和 **Module** 的概念，前面说到Studio中一个窗口只能有一个项目，即Project，代表一个workspace，但是一个Project可以包含多个Module，比如你项目引用的Android Library, Java Library等，这些都可以看做是一个Module;
 
 - 2、上述目录中将java代码和资源文件（图片、布局文件等）全部归结为src，在src目录下有一个main的分组，同时划分出java和res两个文件夹，java文件夹则相当于Eclipse下的src文件夹，res目录结构则一样。    
  
 
 ##偏好设置    
 
-进入后你也许发现字体大小或者样式不符合你的习惯，比如我是觉得代码太小看起来伤眼，Darcular主题默认的字体是12，我个人更习惯14的字体大小。没关系，到 Preferences (设置)页面搜索 Font 找到 Colors&Fonts 下的 Font 选项，我们可以看到默认字体大小是12，但是无法修改，需要先保存才可以修改，点击 Save as 输入一个名字，比如 MyDarcular，然后就可以修改字体大小和字体样式了。   
+进入后你也许发现字体大小或者样式不符合你的习惯，比如我是觉得代码太小看起来伤眼，**Darcular**主题默认的字体是12，我个人更习惯14的字体大小。没关系，到 **Preferences** (设置)页面搜索 **Font** 找到 **Colors&Fonts** 下的 **Font** 选项，我们可以看到默认字体大小是12，但是无法修改，需要先保存才可以修改，点击 **Save as...** 输入一个名字，比如 **MyDarcular**，然后就可以修改字体大小和字体样式了。   
 
 ![img](/img/2016-4-22/029.png)
 
