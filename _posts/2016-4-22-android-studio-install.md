@@ -86,7 +86,7 @@ Android Studio的运行需要 **VC++** 环境，Android Studio安装的过程中
 
 一般不出意外，你就看到这个界面。说明你的Android Studio已经安装成功了。   
 
-### 运行Android Studio ###    
+### 运行Android Studio  
 
 **讲解6**    
 
@@ -191,7 +191,7 @@ Android Studio的运行需要 **VC++** 环境，Android Studio安装的过程中
 ![img](/img/2016-4-22/021.png)    
 
 
-### 其他 ###   
+###其他 
 
 **导入以前版本的Android Studio项目**
 
