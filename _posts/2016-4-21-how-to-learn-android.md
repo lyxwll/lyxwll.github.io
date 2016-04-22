@@ -4,7 +4,7 @@ title:      "如何自学Android编程?"
 subtitle:   "C'est la vie !"
 date:       2016-04-21 11:00:00
 author:     "Wanglili"
-header-img: "img/learn-android.jpg"
+header-img: "img/code.jpg"
 
 tag:
    - help
@@ -15,7 +15,6 @@ tag:
 
 转载自:[http://stormzhang.com/android/2016/01/21/learn-android-byself/][1]
 
-----
 
 **如何自学Android编程**
 [https://www.zhihu.com/question/26417244][2]
