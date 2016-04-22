@@ -20,9 +20,9 @@ tag:
 **转载自：[http://stormzhang.com/devtools/2014/11/25/android-studio-tutorial1/](http://stormzhang.com/devtools/2014/11/25/android-studio-tutorial1/)**
 
 
-**Windows环境下Android Studio的安装**
 
-### 准备工具 ###
+**Windows环境下Android Studio的安装**
+###准备工具
 
 - JDK安装包。      
   要求：JDK7及以上版本。   
