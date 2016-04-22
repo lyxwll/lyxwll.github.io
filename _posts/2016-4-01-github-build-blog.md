@@ -155,11 +155,13 @@ Mac：        [https://mac.github.com/](https://mac.github.com/)
 
  - _config.yml：这是你博客的基本配置文件，里面有你博客的名字，以及存放博主的一些基本信息
 
- - _layouts：这文件夹里面存放你每个页面的设计，一般有default.html（默认页面）和posts.html（博文页面）
+ - _layouts：这文件夹里面存放你每个页面的设计，一般有default.html（默认页面）和posts.html（博文页面）。这是模板文件存放的位置。模板需要通过YAML front matter来定义，后面会讲到，{ { content }}标记用来将数据插入到这些模板中来。
 
- - _includes：这个文件夹里的的内容将会通用到你博客每个页面，起到一种便利的作用
+ - _includes：这个文件夹里的的内容将会通用到你博客每个页面，起到一种便利的作用。   
+ 可以用来存放一些小的可复用的模块，方便通过{ % include file.ext %}（去掉前两个{中或者{与%中的空格，下同）灵活的调用。这条命令会调用_includes/file.ext文件。
 
- - _posts：这里面装的就是你的博文啦，记住，要用markdown语法写，要不上传会失败的。
+ - _posts：这里面装的就是你的博文啦，记住，要用markdown语法写，要不上传会失败的。       
+ 你的动态内容，一般来说就是你的博客正文存放的文件夹。他的命名有严格的规定，必须是2012-02-22-artical-title.MARKUP这样的形式，MARKUP是你所使用标记语言的文件后缀名，根据_config.yml中设定的链接规则，可以根据你的文件名灵活调整，文章的日期和标记语言后缀与文章的标题的独立的。
 
 那么以上就是一个Jekyll规范的博客的基本内容了，想想也不难吧
 
@@ -181,9 +183,48 @@ Mac：        [https://mac.github.com/](https://mac.github.com/)
 那么教程到这儿也差不多完了，之后你可以在**_posts** 文件夹里继续撰写博文，然后按照**第17步** 上传到github即可
 
 
+##使用Disqus管理评论
 
+模板部分到此就算是配置完毕了，但是Jekyll只是个静态页面的发布系统，想做到关爽场倒是很容易，如果想要评论呢？也很简单。
 
+现在专做评论模块的产品有很多，比如[Disqus](https://disqus.com/)，还有国产的多说，Disqus对现在各种系统的支持都比较全面，到写博客为止，多说现在仅是WordPress的一个插件，所以我这里暂时也使用不了，多说与国内的社交网络紧密结合，还是有很多亮点的，值得期待一下。我先选择了Disqus。
+
+我们选择最下面的Universal Code就好，然后会看到一个介绍页面，把下面这段代码复制到你的模板里面，可以只复制到显示文章的模板中：  
+
+```html
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'example'; // required: replace example with your forum shortname 这个地方需要改成你配置的网站名
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+```
+
+配置完之后，你也可以做一些异步加载的处理，提高性能，比如我就在最开始页面打开的时候不显示评论，当你想看评论的时候，点击“显示评论”再加载Disqus的模块。代码很简单，你可以参考我的写法。
+
+```js
+$('#disqus_container .comment').on('click',function(){
+        $(this).html('加载中...');
+        var disqus_shortname = 'beiyuu';
+        var that = this;
+        BYB.includeScript('http://' + disqus_shortname + '.disqus.com/embed.js',function(){$(that).remove()}); //这是一个加载js的函数
+});
+```
+
+如果你不喜欢Disqus的样式，你也可以根据他生成的HTML结构，自己改写样式覆盖它的，Disqus现在也提供每个页面的评论数接口，帮助文档在这里可以看到。
+
+##代码高亮插件
+
+如果写技术博客，代码高亮少不了，有两个可选插件[DlHightLight代码高亮组件](http://mihai.bazon.net/projects/javascript-syntax-highlighting-engine)和[Google Code Prettify](http://code.google.com/p/google-code-prettify/)。DLHightLight支持的语言相对较少一些，有js、css、xml和html，Google的高亮插件基本上任何语言都支持，也可以自定义语言，也支持自动识别，也有行号的特别支持。
+
+Google的高亮插件使用也比较方便，只需要在`<pre>`的标签上加入`prettyprint`即可。所以我选择了Google Code Prettify。
 
  
  
-
