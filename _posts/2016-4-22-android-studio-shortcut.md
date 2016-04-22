@@ -25,15 +25,13 @@ tag:
 **Preferences** -> **Keymap** 然后就可以选择你想要的快捷键，这里不止可以选择**Eclipse**，还可以选择 **Emacs、Net Beans** 等编辑器的快捷键。     
 ![img](/img/2016-4-22/054.png)    
 
-常用快捷键如下：    
+常用快捷键如下：        
 
-|action                     |Windows                                |
-|:-------------------------:|：---------------------------------|
-|MarkDown                  |[https://github.com/younghz/Markdown](https://github.com/younghz/Markdown "Markdown")|
-|moos-young             |[https://github.com/younghz/moos-young](https://github.com/younghz/moos-young "tianchi")|
-
-
-
+| Action      |Windows |
+| :-------- | :--------|
+| Computer  | 1600 USD |
+| Phone     |   12 USD |
+| Pipe      |    1 USD |
 
 
 
