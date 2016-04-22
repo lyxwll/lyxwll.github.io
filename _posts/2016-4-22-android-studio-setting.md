@@ -4,9 +4,8 @@ layout:     post
 title:      "Android Studio的基本设置" 
 subtitle:   " \"C'est la vie !\""
 date:       2016-04-22 14:50:00
-author:     "Wangll"
+author:     "Wanglili"
 header-img: "img/ranger_rebecca.jpg"
-
 tag:
 
    - AndroidStudio
@@ -21,11 +20,30 @@ tag:
 
 
 
+### 项目结构 ###
+
+当我们新建一个项目的目录结构默认是这样的:    
+![img](/img/2016-4-22/026.png)
+
+可以看到和Eclipse的目录结构有很大区别，Studio一个窗口只能有一个项目，而Eclipse则可以同时存在很多项目，如果你看着不习惯可以点击左上角进行切换。
+
+![img](/img/2016-4-22/027.png)     
+
+切换到“project”模式下的目录结构是这样的，我个人也更习惯这种格式。
+
+![img](/img/2016-4-22/028.png)
+
+和Eclipse的区别有如下：
+
+- 1、Studio中有Project和Module的概念，前面说到Studio中一个窗口只能有一个项目，即Project，代表一个workspace，但是一个Project可以包含多个Module，比如你项目引用的Android Library, Java Library等，这些都可以看做是一个Module;
+
+- 2、上述目录中将java代码和资源文件（图片、布局文件等）全部归结为src，在src目录下有一个main的分组，同时划分出java和res两个文件夹，java文件夹则相当于Eclipse下的src文件夹，res目录结构则一样。    
+ 
 
 
-### 1.前言 ###
 
-鉴于我自身建站经历，不熟悉各种编码语言，口袋里没有多少钱，却殷切希望拥有一个独立的个人博客，在翻阅了各种教程后，看完各种眼花缭乱的代码后，终于将这个网站在github pages上搞出来了。在此，我不希望大家都重蹈覆辙，为了方便大家，我在此为大家做一个傻瓜教程
+
+
 
 ### 2.了解github ###
 
