@@ -5,14 +5,16 @@ subtitle:   "C'est la vie !"
 date:       2016-04-21 11:00:00
 author:     "Wanglili"
 header-img: "img/code.jpg"
-
 tag:
-   - help
+   - android
 ---
+
+
 
 # 如何自学Android编程?
 
 
+----
 转载自:[http://stormzhang.com/android/2016/01/21/learn-android-byself/][1]
 
 
