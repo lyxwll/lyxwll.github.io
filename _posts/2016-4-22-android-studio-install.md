@@ -57,28 +57,33 @@ Android开发工具的网站，上面链接是Studio的canary渠道，列出了S
 安装过程中的下一步之类的简单操作，不会进行截图讲解，因为你只需要点击 next 。
 
 **讲解1**    
+
 ！[img](/img/2016-4-22/001.png)     
 
 **第一个选项：**Android Studio程序，必选。**第二个选项：**Android SDK 如果你的电脑中，已经存在 Android SDK 可以不勾选。 **第三个选项** 和 **第四个选项** 都和虚拟机有关系，如果你不使用虚拟机或者SDK中的虚拟机，可以不勾选。    
 
 **讲解2**   
+
 ！[img](/img/2016-4-22/002.png) 
 
 选择Android Studio和 Android SDK 的安装目录。**PS:最好不要安装在C盘。**    
 
 **讲解3**   
+
 ！[img](/img/2016-4-22/003.png)    
 
 如果你在 **讲解1** 中勾选了 **HAXM** （也就是第四个选项. **HAXM** 用以为虚拟机提供加速服务，详细内容，请自行搜索），就会出现这一步。
 你需要根据自己机器的内容大小来设置这个值，一般建议默认即可。
 
 **讲解4**    
+
 ！[img](/img/2016-4-22/004.png)  
 
 Android Studio的运行需要 **VC++** 环境，Android Studio安装的过程中，会自动安装。这也是为什么建议使用安装包（exe）的原因。
 有些人的电脑使用 **36X** 类的软件会禁止安装 **VC++** 环境，请注意放行。   
 
 **讲解5**    
+
 ！[img](/img/2016-4-22/005.png)   
 
 一般不出意外，你就看到这个界面。说明你的Android Studio已经安装成功了。   
@@ -86,6 +91,7 @@ Android Studio的运行需要 **VC++** 环境，Android Studio安装的过程中
 ### 运行Android Studio ###    
 
 **讲解6**    
+
 ！[img](/img/2016-4-22/006.png)
 
 每一次安装，都会显示这个界面。用以选择导入Android Studio的配置文件。   
@@ -97,6 +103,7 @@ Android Studio的运行需要 **VC++** 环境，Android Studio安装的过程中
 如果你以前使用过Android Studio，可以选择到以前的版本。如果你是第一次使用，可以选择第三项。
 
 **讲解7**    
+
 ！[img](/img/2016-4-22/007.png)   
 
 这是在检查你的 **Android SDK** 。有人会在这里卡上很长时间，很大的原因就是：网络连接有问题。可以通过配置 **hosts** 的方式来解决。如果检查需要更新，则会让你安装，从而会有后面 **讲解8 - 讲解11** 。
@@ -104,26 +111,31 @@ Android Studio的运行需要 **VC++** 环境，Android Studio安装的过程中
 在Android Studio安装目录下的 **bin 目录**下，找到 **idea.properties** 文件，在文件最后追加 **disable.android.first.run=true** 。
 
 **讲解8**    
+
 ！[img](/img/2016-4-22/008.png)   
 
 点击Next进入选择设置类型向导页。
 
 **讲解9**    
+
 ！[img](/img/2016-4-22/009.png)    
 
 这里有两个选项“**Standard**”和“**Custom**”，即标准和自定义，如果你本机的**Android SDK**没有配置过，那么建议直接选择“**Standard**”, 点击“**Finish**”按钮。  
 
 **讲解10**    
+
 ！[img](/img/2016-4-22/010.png)   
 
 如果你 **讲解9** 中选择第一个选项的话，会显示这个界面。选择 **Accept** 点击 **Finish** 进行安装即可。   
 
 **讲解11**    
+
 ！[img](/img/2016-4-22/011.png)   
 
 如果你 **讲解9** 中选择第二个选项的话，会显示这个界面。需要你选择一个安装目录，需要注意的是： **这个目录中不能包含空格以及汉字。不建议使用默认的%APPDATA%目录** 。点击 **next** 后可以看到类似 **讲解10** 的页面，选择 **Accept** 点击 **Finish** 进行安装。
 
 **讲解12**    
+
 ！[img](/img/2016-4-22/012.png)   
 
 当你更新完 **Android SDK** ，你就会看到这个界面。直到这个界面才说明，你可以使用**Android Studio**了。    
@@ -142,11 +154,13 @@ Android Studio的运行需要 **VC++** 环境，Android Studio安装的过程中
 ### 新建项目 ###   
 
 **讲解13**    
+
 ！[img](/img/2016-4-22/013.png)    
 
 在这个页面我们可以新建项目，也可以导入项目本地或者GitHub上的项目等，左边可以查看最近打开的项目等，这里我直接新建项目。
 
 然后到如下界面：   
+
 ！[img](/img/2016-4-22/014.png)  
 
 我们填上项目名称和报名以及项目路径等然后”Next”。  
@@ -199,11 +213,13 @@ http\://services.gradle.org/distributions/gradle-x.x.x-all.zip --> http\://servi
 有时很多人运行Android Studio会提醒你 JDK 或者 Android SDK 不存在，你需要重新设置。你需要到全局的 Project Structure 页面下进行设置。进入全局的 Project Structure 页面方法如下：
 
 - 方法1:  
+- 
 ！[img](/img/2016-4-22/023.png)   
 
 选择 **Configure** --> **Project Defaults** --> **Project Structure**   
 
 - 方法2:   
+- 
 ！[img](/img/2016-4-22/024.png)    
 
 选择 **File** --> **Other Settings** --> **Default Project Structure**    
