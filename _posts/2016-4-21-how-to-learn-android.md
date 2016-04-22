@@ -1,7 +1,7 @@
 ---
 layout:     post
 title:      "如何自学Android编程?" 
-subtitle:   "C'est la vie !"
+subtitle:   "Hello World !"
 date:       2016-04-21 11:00:00
 author:     "Wanglili"
 header-img: "img/code.jpg"
