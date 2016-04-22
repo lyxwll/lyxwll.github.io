@@ -11,7 +11,7 @@ tag:
 
 
 
-## Android Studio 的下载与安装 ##
+#Android Studio 的下载与安装
 
 
 **转载自：[http://stormzhang.com/devtools/2014/11/25/android-studio-tutorial1/](http://stormzhang.com/devtools/2014/11/25/android-studio-tutorial1/)**
@@ -48,7 +48,7 @@ Android开发工具的网站，上面链接是Studio的canary渠道，列出了S
 > 3. 可以根据电脑中有没有Android SDK来选择下载是否包含SDK的安装文件。   
 > 4. 建议使用包含SDK的安装包（exe）。
 
-### 安装 ###
+###安装
 
 安装过程中的下一步之类的简单操作，不会进行截图讲解，因为你只需要点击 next 。
 
