@@ -149,7 +149,7 @@ Android Studio的运行需要 **VC++** 环境，Android Studio安装的过程中
 如果一些选项不能点击，说明你的 **JDK** 或者 **Android SDK** 目录指向有问题，请看下面的 设置 **JDK 或者 Android SDK目录** 。
 
 
-### 新建项目 ###   
+###新建项目  
 
 **讲解13**    
 
@@ -211,13 +211,11 @@ http\://services.gradle.org/distributions/gradle-x.x.x-all.zip --> http\://servi
 有时很多人运行Android Studio会提醒你 JDK 或者 Android SDK 不存在，你需要重新设置。你需要到全局的 Project Structure 页面下进行设置。进入全局的 Project Structure 页面方法如下：
 
 - 方法1:  
-- 
 ![img](/img/2016-4-22/023.png)   
 
 选择 **Configure** --> **Project Defaults** --> **Project Structure**   
 
 - 方法2:   
-- 
 ![img](/img/2016-4-22/024.png)    
 
 选择 **File** --> **Other Settings** --> **Default Project Structure**    
