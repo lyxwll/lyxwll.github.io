@@ -244,7 +244,7 @@ http://lirenlong.github.io/hotfix/
 最近响应式编程框架RxJava越来越受大家待见，RxJava让你异步任务更简洁方便，以我对技术的敏感性认为RxJava可能会越来越普遍，推荐大家学习。这里有一系列详细的资料教你学习。
 https://github.com/lzyzsd/Awesome-RxJava
 
-当你下定决心，准备前行的时候，剩下的只有坚持了！
+> 当你下定决心，准备前行的时候，剩下的只有坚持了！
 
 
   [1]: http://stormzhang.com/android/2016/01/21/learn-android-byself/
