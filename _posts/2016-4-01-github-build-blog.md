@@ -189,7 +189,7 @@ Mac：        [https://mac.github.com/](https://mac.github.com/)
 
 现在专做评论模块的产品有很多，比如[Disqus](https://disqus.com/)，还有国产的多说，Disqus对现在各种系统的支持都比较全面，到写博客为止，多说现在仅是WordPress的一个插件，所以我这里暂时也使用不了，多说与国内的社交网络紧密结合，还是有很多亮点的，值得期待一下。我先选择了Disqus。
 
-我们选择最下面的Universal Code就好，然后会看到一个介绍页面，把下面这段代码复制到你的模板里面，可以只复制到显示文章的模板中：  
+我们选择最下面的`Universal Code`就好，然后会看到一个介绍页面，把下面这段代码复制到你的模板里面，可以只复制到显示文章的模板中：  
 
 ```html
 <div id="disqus_thread"></div>
