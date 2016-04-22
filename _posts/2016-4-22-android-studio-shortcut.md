@@ -27,19 +27,49 @@ tag:
 
 常用快捷键如下：        
 
-| Action      |Windows |
-| :-------- | :--------|
-| Computer  | 1600 USD |
-| Phone     |   12 USD |
-| Pipe      |    1 USD |
+| Action             | Windows         |
+| :--------          | :--------       |
+| Ctrl + C           | 复制当前行或选中的内容 |
+| Ctrl + V           | 粘贴复制的内容  |
+| Ctrl + X           | 剪切当前行或选中的内容 |
+| Ctrl + Y           | 删除当前选中的行       |
+| Ctrl + D           | 复制当前行并粘贴在下一行(且与粘贴板的内容没有冲突) |
+| Ctrl + Z           | 撤销 倒退       |
+| Ctrl + Shift + Z   | 还原 向前       |
+| Ctrl + F           | 查找            |
+| Ctrl + R           | 查找 + 替换     |
+| Ctrl + O           | 重写父类的方法  |
+| Ctrl + J           | 快速插入一个代码片段的方法     |
+| Ctrl + E           | 得到一个最近查看文件的搜索列表 |
+| Ctrl + U           | 打开当前类的父类或者实现的接口 |
+| Ctrl + P           | 显示参数信息    |
+| Ctrl + H           | 显示类继承结构图| 
+| Ctrl + Q           | 显示注释文档    |
+| Ctrl + /           | 注释代码(//)    |
+| Ctrl + Shift + /   | 注释代码(/**/)  |
+| Ctrl + Alt + L     | 格式化代码      |
+| Ctrl + Alt + O     | 清除无效包引用  |   
+| Ctrl + Alt + H     | 显示层级结构图  |
+| Ctrl + Alt + P     | 提取参数        |
+| Ctrl + Alt + M     | 提取方法        |
+| Ctrl + Alt + V     | 提取变量        |
+| Ctrl + Alt + I     | 将选中的代码进行自动缩进编排        |    
+| Ctrl + Alt + T     | 将选中的代码放入try{} if{} else{}等 |
+| Ctrl + Shift + delete | 快速移除 if{} else{} try{}等方法 |
+| Ctrl + shift + I   | 快速查找方法定义 |
+| Ctrl + Shift + U   | 大小写转换       |
+| Ctrl + Shift + E   | 显示最近修改的文件列表         |
+| Ctrl + Shift + enter| 自动生成未补全的部分代码      |
+| Ctrl + Shift + backSpace | 返回最后编辑的位置       |
+| Ctrl + shift + up/down| 上下移动整个方法块          |
+| Alt + up/down      | 使光标在方法和内部类之间移动   |
+| Alt + shift + up/down | 上下移动代码行|
+| Alt + J            | 选择一侧的多行代码(且修改时会显示相同的内容)        |
+| Alt + F8           | 计算返回值       |
+| Shift + F6         | 重命名           |
 
 
-
-
-
-
-
-
+![img](/img/2016-4-22/055.png) 
 
 
 
