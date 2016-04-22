@@ -5,8 +5,7 @@ subtitle:   " \"Hi there\""
 date:       2016-04-1 10:00:00
 author:     "Wanglili"
 header-img: "img/hello-world.jpg"
-tag:
-   - Journal
+
 ---
 
 > **“乌拉乌拉乌拉 ”**
