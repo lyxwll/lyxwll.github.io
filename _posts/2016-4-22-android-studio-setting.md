@@ -1,20 +1,27 @@
 ---
 
 layout:     post
-title:      "使用github pages搭建个人静态博客" 
+title:      "Android Studio的基本设置" 
 subtitle:   " \"C'est la vie !\""
-date:       2016-04-01 09:50:00
+date:       2016-04-22 14:50:00
 author:     "Wangll"
 header-img: "img/ranger_rebecca.jpg"
 
 tag:
 
-   - github
-   - lesson
+   - AndroidStudio
 
 ---
 
-**转载自:[http://cyzus.github.io/2015/06/21/github-build-blog/](http://cyzus.github.io/2015/06/21/github-build-blog/)**
+
+**转载自:[http://stormzhang.com/devtools/2014/11/28/android-studio-tutorial2/](http://stormzhang.com/devtools/2014/11/28/android-studio-tutorial2/)**
+
+
+
+
+
+
+
 
 ### 1.前言 ###
 
