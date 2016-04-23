@@ -1,21 +1,19 @@
 ---
 layout:     post
-title:      "Android Studio 的下载与安装" 
+title:      "Android Studio的下载与安装" 
 subtitle:   "\"C'est la vie !\""
 date:       2016-04-22 11:20:00
 author:     "Wangll"
 header-img: "img/ranger_rebecca.jpg"
+
 tag:    
    - Android Studio
 ---
-
-
 
 #Android Studio 的下载与安装
 
 
 **转载自：[http://stormzhang.com/devtools/2014/11/25/android-studio-tutorial1/](http://stormzhang.com/devtools/2014/11/25/android-studio-tutorial1/)**
-
 
 
 **Windows环境下Android Studio的安装**
