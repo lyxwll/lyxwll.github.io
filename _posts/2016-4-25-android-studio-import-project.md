@@ -46,14 +46,14 @@ Google官方建议是通过本方法进行Android Studio导入 Eclipse 项目。
 选择导出类型。选择 **Android --> Generate Gradle build files** 。     
 ![img](/img/2016-4-25/003.png)    
 
-点击 Next 。
+点击 **Next** 。
 
 ###讲解3
 
 很长一段英语（完全看不懂是什么意思）。    
 ![img](/img/2016-4-25/004.png)  
 
-点击 Next 。
+点击 **Next** 。
 
 ###讲解4
 
@@ -97,7 +97,7 @@ appcompat_v7 目录下：
 
 由于 **Eclipse** 的 **ADT** 插件已经很久没有更新了，自动生成的 **Gradle** 编译设置已经跟不上Android Studio的更新速度，所以我们需要手动修改一些内容。
 
-打开工作空间目录下的 gradle --> wrapper --> gradle-wrapper.properties 。修改一下内容： distributionUrl=http\://services.gradle.org/distributions/gradle-a.b.c-all.zip --> distributionUrl=https\://services.gradle.org/distributions/gradle-2.2.1-all.zip   
+打开工作空间目录下的 gradle --> wrapper --> gradle-wrapper.properties 。修改一下内容：               distributionUrl=http\://services.gradle.org/distributions/gradle-a.b.c-all.zip -->                         distributionUrl=https\://services.gradle.org/distributions/gradle-2.2.1-all.zip   
 
 打开工作空间目录下的 **build.gradle** 文件。修改以下内容：
 
@@ -300,7 +300,7 @@ Android Studio识别出你的项目是一个 **Eclipse Android** 项目，它将
 
 ##其他导入方式    
 
-导入一个项目除了在Android Studio起始页进行导入之外，你也可以在Android Studio主页中进行导入。
+导入一个项目除了在Android Studio起始页进行导入之外，你也可以在Android Studio主页中进行导入。                
 **File --> Import Project** 或者 **File --> Import Module** 。            
 ![img](/img/2016-4-25/034.png)    
 导入的过程和前面的讲解都是一样的，就不在赘述了。
