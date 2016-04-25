@@ -12,7 +12,7 @@ tag:
 
 ---    
 
-#Android Studio快捷键    
+# Android Studio快捷键    
 
 
 **转载自**：    
@@ -21,7 +21,7 @@ tag:
 3. [http://www.developerphil.com/android-studio-tips-of-the-day-roundup-1/](http://www.developerphil.com/android-studio-tips-of-the-day-roundup-1/)
 
 
-##快捷键
+## 快捷键
 
 对于很多Eclipse转过来的同学，不适应的最主要就是快捷键部分了，Studio默认的快捷键和Eclipse差别很大，但是Studio强大的地方在于通过设置你可以一直沿用Eclipse风格的快捷键，这样对于那些Eclipse过渡来的同学省了很多学习成本。
 
