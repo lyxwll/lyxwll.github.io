@@ -214,6 +214,6 @@ http\://services.gradle.org/distributions/gradle-x.x.x-all.zip --> http\://servi
 
 选择 **File** --> **Other Settings** --> **Default Project Structure**    
 
-![img](/img/2016-4-22/024.png) 
+![img](/img/2016-4-22/025.png) 
    
 在此页面下设置 **JDK** 或者 **Android SDK** 目录即可。  
