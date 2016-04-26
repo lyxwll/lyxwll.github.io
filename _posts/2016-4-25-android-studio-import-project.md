@@ -6,7 +6,7 @@ date:       2016-04-25 14:53:00
 author:     "Wanglili"
 header-img: "img/emily.jpg"
 tag:
-   - Android     
+   - AndroidStudio     
 
 ---   
 
