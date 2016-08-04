@@ -152,7 +152,7 @@ public SketchView(Context context, AttributeSet attrs, int defStyleAttr) {
     }
 ```
 (只贴了核心代码，完整代码会在文章最后给链接)
-可以看到在onDraw()方法里，我调用了canvas的**drawCircle**方法画了一个圆，圆心的位置是又画布的位置决定的，位于画布的中心，width和height参数是在onLayout()方法里拿到的，在此之前取到的height和width都是不准确的，这点要注意：圆的半径是xml文件中定义的size*scale，而这个scale是通过一个ValueAnimator确定的，变化范围是从1到2，ValueAnimator的值发生改变会赋给scale同时调用postInvalidate()方法，这个方法的作用就是重绘，然后圆的半径就会发生改变，这样刷新就会实现动画的效果。
+可以看到在onDraw()方法里，我调用了canvas的**drawCircle**方法画了一个圆，圆心的位置是又画布的位置决定的，位于画布的中心，width和height参数是在onLayout()方法里拿到的，在此之前取到的height和width都是不准确的，这点要注意：圆的半径是xml文件中定义的size*scale，而这个scale是通过一个ValueAnimator确定的，变化范围是从1到2，ValueAnimator的值发生改变会赋给scale同时调用postInvalidate()方法，这个方法的作用就是重绘，然后圆的半径就会发生改变，这样刷新就会实现动画的效果。     
 ![img](http://www.hdxhd.cn/sketch_view.gif)
 
 ###requstLayout和invidious
@@ -195,7 +195,11 @@ Android的事件处理太过复杂，我会在以后另起一篇文章来好好�
 源码地址：[Github地址](https://github.com/shaohui10086/AndroidPractise/blob/master/app/src/main/java/me/shaohui/androidpractise/widget/SketchView.java)
 
 
+###参考链接
 
+[http://ghui.me/post/2015/10/view-measure/](http://ghui.me/post/2015/10/view-measure/)
+[http://blog.csdn.net/wzy_1988/article/details/49619773](http://blog.csdn.net/wzy_1988/article/details/49619773)
+[http://www.cnblogs.com/angeldevil/p/3479431.html](http://www.cnblogs.com/angeldevil/p/3479431.html)
 
 
 
