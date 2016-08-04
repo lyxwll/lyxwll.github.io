@@ -18,16 +18,18 @@
     
 通过上面这段代码，我定义了一个SketchView，继承自View对象，并且复写了它的三个构造方法，我主要来分析一下这三个构造方法：
 > 第一个构造方法就是我们普通在代码中新建一个view用到的方法，例如:
-    	SketchView sketchView = new SketchView(this);    
+
+    SketchView sketchView = new SketchView(this);    
     	
 就这样，一个自定义的view就被新建出来了，然后可以根据需求添加到布局里。
 
 > 第二个构造方法就是我们一般在xml文件里添加一个view:
+
     <me.shaohui.androidpractise.widget.SketchView
-       android:layout_width="match_parent"
-       android:layout_height="match_parent"
-       android:layout_marginRight="16dp"
-       android:layout_marginTop="16dp" />
+           android:layout_width="match_parent"
+           android:layout_height="match_parent"
+           android:layout_marginRight="16dp"
+           android:layout_marginTop="16dp" />
 
 这样，我们就把一个SketchView添加到布局文件里，并且加了一些布局属性，宽高属性以及margin属性，这些属性会存放在第二个构造函数的AttributeSet参数里。   
 
