@@ -38,11 +38,11 @@
 
 + 第三个构造函数比第二个构造函数多了一个int型的值，名字叫defStyleAttr，从名称上判断，这是一个关于自定义属性的参数，实际上我们的猜测也是正确的，第三个构造函数不会被系统默认调用，而是需要我们自己去显式调用，比如在第二个构造函数里调用调用第三个函数，并将第三个参数设为0。
 
-> 关于第三个参数defStyleAttr,其实也可以拿出来说一整篇文章，有想详细了解的读者可以去看下本篇文章最后的第三个参考链接，我在这里只是简单的说一下：defStyleAttr指定的是在Theme style定义的一个attr，它的类型是reference,主要生效在obtainStyledAttributes方法里，obtainStyledAttributes方法有四个参数，第三个参数是defStyleAttr，第四个参数是自己指定的一个style，当且仅当defStyleAttr为0或者在Theme中找不到defStyleAttr指定的属性时，第四个参数才会生效，这些指的都是默认属性，当在xml里面定义的，就以在xml文件里指定的为准，所以优先级大概是：xml>style>defStyleAttr>defStyleRes>Theme指定，当defStyleAttr为0时，就跳过defStyleAttr指定的reference，所以一般用0就能满足一些基本开发。  
+> 关于第三个参数**defStyleAttr**,其实也可以拿出来说一整篇文章，有想详细了解的读者可以去看下本篇文章最后的第三个参考链接，我在这里只是简单的说一下：**defStyleAttr**指定的是在**Theme style**定义的一个**attr**，它的类型是reference,主要生效在**obtainStyledAttributes**方法里，**obtainStyledAttributes**方法有四个参数，第三个参数是**defStyleAttr**，第四个参数是自己指定的一个style，当且仅当defStyleAttr为0或者在Theme中找不到defStyleAttr指定的属性时，第四个参数才会生效，这些指的都是默认属性，当在xml里面定义的，就以在xml文件里指定的为准，所以优先级大概是：**xml>style>defStyleAttr>defStyleRes>Theme**指定，当defStyleAttr为0时，就跳过defStyleAttr指定的reference，所以一般用0就能满足一些基本开发。  
 
 ###Measure->Layout->Draw    
 
-在学会如何写一个自定义控件之前，了解一个控件的绘制流程是必要的，在Android里，一个view的绘制流程包括：Measure，Layout和Draw，通过onMeasure知道一个view要占界面的大小，然后通过onLayout知道这个控件应该放在哪个位置，最后通过onDraw方法将这个控件绘制出来，然后才能展现在用户面前，下面我将挨个分析一下这三个方法的作用。    
+在学会如何写一个自定义控件之前，了解一个控件的绘制流程是必要的，在Android里，一个view的绘制流程包括：**Measure**，**Layout**和**Draw**，通过**onMeasure**知道一个view要占界面的大小，然后通过**onLayout**知道这个控件应该放在哪个位置，最后通过**onDraw**方法将这个控件绘制出来，然后才能展现在用户面前，下面我将挨个分析一下这三个方法的作用。    
 
 + **onMeasure 测量**，通过测量知道一个一个view要占的大小，方法参数是两个int型的值，我们都知道，在java中，int型由4个字节（32bit）组成，在MeasureSpce中，用前两位表示mode，用后30位表示size。       
 ```Java
@@ -67,6 +67,11 @@
 	    }  
 ```    
 
+**MeasureSpce**的**mode**有三种：**EXACTLY**, **AT_MOST**，**UNSPECIFIED**，除却UNSPECIFIED不谈，其他两种mode：当父布局是EXACTLY时，子控件确定大小或者match_parent，mode都是EXACTLY，子控件是wrap_content时，mode为AT_MOST；当父布局是AT_MOST时，子控件确定大小，mode为EXACTLY，子控件wrap_content或者match_parent时，mode为AT_MOST。所以在确定控件大小时，需要判断MeasureSpec的mode，不能直接用MeasureSpec的size。在进行一些逻辑处理以后，调用**setMeasureDimension()**方法，将测量得到的宽高传进去供layout使用。    
+
+![img](http://www.hdxhd.cn/view_onMeasure.png)
+
+> 需要明白的一点是 ,测量所得的宽高不一定是最后展示的宽高，最后宽高确定是在**onLayout**方法里，layou（left，top，right，bottom），不过一般都是一样的。
 
 
 
