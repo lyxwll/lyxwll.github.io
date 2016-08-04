@@ -197,8 +197,8 @@ Android的事件处理太过复杂，我会在以后另起一篇文章来好好�
 
 ###参考链接
 
-[http://ghui.me/post/2015/10/view-measure/](http://ghui.me/post/2015/10/view-measure/)
-[http://blog.csdn.net/wzy_1988/article/details/49619773](http://blog.csdn.net/wzy_1988/article/details/49619773)
+[http://ghui.me/post/2015/10/view-measure/](http://ghui.me/post/2015/10/view-measure/)     
+[http://blog.csdn.net/wzy_1988/article/details/49619773](http://blog.csdn.net/wzy_1988/article/details/49619773)     
 [http://www.cnblogs.com/angeldevil/p/3479431.html](http://www.cnblogs.com/angeldevil/p/3479431.html)
 
 
