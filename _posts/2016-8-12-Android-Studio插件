@@ -4,7 +4,6 @@
 1.GsonFormat
 快速将json字符串转换成一个Java Bean，免去我们根据json字符串手写对应Java Bean的过程。
 
-
 使用方法：快捷键Alt+S也可以使用Alt+Insert选择GsonFormat
 
 
