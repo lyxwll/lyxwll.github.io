@@ -1,7 +1,8 @@
 # Android Studio 之 Live Templates 高效利用
 
 标签： AndroidStudio
-
+转载:[http://blog.csdn.net/zuiwuyuan/article/details/48201185](http://blog.csdn.net/zuiwuyuan/article/details/48201185)
+[http://blog.csdn.net/DesmondJ/article/details/47017205](http://blog.csdn.net/DesmondJ/article/details/47017205)
 ------
 
 在编辑器中使用Ctrl + J 快捷键可以调出Live Templates，可以自动补全所设置模板的代码，善用它能够在很大程度上减少开发所需时间。
@@ -76,6 +77,41 @@
 | ci        | public static final int $VAR$ = $VALUE$; |
 | cs        | public static final String $VAR$ = $VALUE$; |
 
+### 添加方法注释模版    
+
+方法注释模版，大家肯定都不陌生，就是方法上方添加的备注的模板，用过Eclipse的人都知道，当你在方法名前加上/**，再敲击下回车键，系统会自动生成注释信息。 可Android Studio却并没像Eclipse那样有那么良好的默认注释模板，那Android Studio如何设置注释模板呢？
+
+**步骤**     
+1.File -> Setting -> Editor -> Live Templates       
+
+2.点击+，创建一个**Template Group** :     
+![img](/img/2016-9-22/0005.png)              
+
+3.填个你要的**group**名，我的叫**MyTemplates**
+![img](/img/2016-9-22/0006.png)      
+
+4.选中你刚刚创建的**Group**，创建**Live Template**     
+![img](/img/2016-9-22/0007.png)                     
+![img](/img/2016-9-22/0008.png)                  
+
+**Abbreviation**:表示这个注释的快捷方式，你敲cmt加回车，模板就出来了
+**Description**: 表示这个模板描述
+**Template text**：模板的内容
+
+5. 要设置你这个mct快捷键在哪里生效，我的选择是在声明的时候生效，也即你在方法名上使用快捷键**Ctrl + J**选择mct就可以了。     
+![img](/img/2016-9-22/0009.png) 
+
+6. 编辑模板信息中的变量
+   我的Template text有定义了三个变量 desc,date,time,后面两个我要生成日期和时间，所以我们要编辑这两个变量；点击Edit variables，在弹窗里分别为date 和time就是设置对应的方法，date()这个方法会生成日期，time()这个方法会生成时间
+
+![img](/img/2016-9-22/0010.png)      
+
+到此，一个简单的模板即定义好了。接下来可以测试使用。     
+
+7.效果如下:       
+
+![img](/img/2016-9-22/0011.png)      
+![img](/img/2016-9-22/0012.png)
 
 
 
@@ -84,40 +120,3 @@
 
 
 
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
