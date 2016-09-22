@@ -4,7 +4,7 @@
 
 ------
 
-在编辑器中使用用Ctrl + J 快捷键可以调出Live Templates，可以自动补全所设置模板的代码，善用它能够在很大程度上减少开发所需时间。
+在编辑器中使用Ctrl + J 快捷键可以调出Live Templates，可以自动补全所设置模板的代码，善用它能够在很大程度上减少开发所需时间。
 
 ### 设置位置
 - File --> Settings --> Editor --> Live Templates
@@ -32,10 +32,64 @@
 | fdv_child   | $root$.findViewById(R.id.$resId$); |
 | fdvc_child  | ($cast$) $root$.findViewById(R.id.$resId$); |     
 
-示例：
+示例：    
+![img](/img/2016-9-22/0001.gif)  
+
+**Bitmap**初始化 $resource$ 设置defaultValue为"getResources()"             
+
+| Name        | Templates Text  | 
+| ------------| :-----:  |
+| bmp_res     | Bitmap $var$ = BitmapFactory.decodeResource($resource$, R.id.$resId$); |   
+
+示例:   
+![img](/img/2016-9-22/0002.gif)              
+
+**Log** 以下$method_name$ 的expression值为 className(), $method_name$ 的expression值为methodName()。     
+  
+| Name      | Templates Text  | 
+| ----------| :-----:  |
+| tag       | private static final String TAG = “$class_name$”; |
+| ld        | Log.d(TAG, “$method_name$” + $content$); |
+| li        | Log.i(TAG, “$method_name$” + $content$); |
+| le        | Log.e(TAG, “$method_name$” + $content$); |     
+| lv        | Log.v(TAG, “$method_name$” + $content$); |
+| lw        | Log.w(TAG, “$method_name$” + $content$); |      
+
+示例:    
+![img](/img/2016-9-22/0003.gif)            
+
+**for循环**          
+
+| Name      | Templates Text  | 
+| ----------| :-----:  |
+| foreach       | for ($i$ : $data$) { 
+$cursor$ 
+} |
+| fiter     | for ($i$=$start$; $i$<$end$; $i$++) { 
+$cursor$ 
+} |
+| fiter_with_init  | for (int $i$=$start$; $i$<$end$; $i$++) { 
+$cursor$ 
+} |
+
+示例:    
+![img](/img/2016-9-22/0004.gif)             
+
+**常量定义**       
+
+| Name      | Templates Text  | 
+| ----------| :-----:  |
+| ci        | public static final int $VAR$ = $VALUE$; |
+| cs        | public static final String $VAR$ = $VALUE$; |
 
 
-**Bitmap**初始化 $resource$ 设置defaultValue为"getResources()"
+
+
+
+
+
+
+
 
     
     
