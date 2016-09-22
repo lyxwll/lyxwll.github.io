@@ -1,7 +1,8 @@
 # Android Studio 之 Live Templates 高效利用
 
-标签： AndroidStudio
-转载:[http://blog.csdn.net/zuiwuyuan/article/details/48201185](http://blog.csdn.net/zuiwuyuan/article/details/48201185)
+标签： AndroidStudio              
+------
+转载:[http://blog.csdn.net/zuiwuyuan/article/details/48201185](http://blog.csdn.net/zuiwuyuan/article/details/48201185)      
 [http://blog.csdn.net/DesmondJ/article/details/47017205](http://blog.csdn.net/DesmondJ/article/details/47017205)
 ------
 
