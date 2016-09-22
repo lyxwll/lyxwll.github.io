@@ -2,7 +2,7 @@
 
 标签： AndroidStudio
 
----
+------
 
 在编辑器中使用用Ctrl + J 快捷键可以调出Live Templates，可以自动补全所设置模板的代码，善用它能够在很大程度上减少开发所需时间。
 
@@ -16,9 +16,8 @@
 可以使用**Edit Variable** 对它进行一部分修改，它可以修改以下部分：               
 
 | Name        | Expression  | Default Value  | Skip if defined  |
-| --------   | -----:  | :----:  | :-----: |
-| 计算机     | \$1600  |   5     |         |
-
+| ------------   | -----:  | :----:  | :-----: |
+| 你所定义的所有 $...$ | 为变量赋特殊值 |  默认值 |使用时是否跳过编辑 |
 
 在**Expression**内有很多供使用的非常方便的函数，如className(), methodName()等等。设置Expression后别忘了勾选Skip if defined， 这样在使用的时候光标就不会再停留在这个变量处。   
 
@@ -26,11 +25,51 @@
 
 **findViewById** 以下所有$cast$变量的expression值均为expectedType().
 
-
+| Name        | Templates Text  | 
+| ------------| :-----:  |
+| fdv         | findViewById(R.id.$resId$); |
+| fdvc        | ($cast$) findViewById(R.id.$resId$); |
+| fdv_child   | $root$.findViewById(R.id.$resId$); |
+| fdvc_child  | ($cast$) $root$.findViewById(R.id.$resId$); |     
 
 示例：
 
 
 **Bitmap**初始化 $resource$ 设置defaultValue为"getResources()"
 
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
