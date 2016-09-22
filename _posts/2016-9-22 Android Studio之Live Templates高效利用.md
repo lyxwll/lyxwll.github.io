@@ -62,15 +62,9 @@
 
 | Name      | Templates Text  | 
 | ----------| :-----:  |
-| foreach       | for ($i$ : $data$) { 
-$cursor$ 
-} |
-| fiter     | for ($i$=$start$; $i$<$end$; $i$++) { 
-$cursor$ 
-} |
-| fiter_with_init  | for (int $i$=$start$; $i$<$end$; $i$++) { 
-$cursor$ 
-} |
+| foreach   | for ($i$ : $data$) { $cursor$ } |
+| fiter     | for ($i$=$start$; $i$<$end$; $i$++) { $cursor$ } |
+| fiter_with_init  | for (int $i$=$start$; $i$<$end$; $i$++) { $cursor$ } |
 
 示例:    
 ![img](/img/2016-9-22/0004.gif)             
