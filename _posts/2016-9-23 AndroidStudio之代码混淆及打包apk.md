@@ -71,12 +71,9 @@
 -keep public class * extends android.support.v4.**
 -keep public class * extends android.app.Fragment
 
-
 #如果引用了v4或者v7包，可以忽略警告，因为用不到android.support
 -dontwarn android.support.**
 
-
- 
 #保持自定义组件不被混淆
 -keep public class * extends android.view.View {
     public <init>(android.content.Context);
@@ -85,7 +82,6 @@
     public void set*(...);
 }
 
- 
 #保持 Serializable 不被混淆
 -keepnames class * implements java.io.Serializable
  
@@ -114,36 +110,28 @@
 #    public static <fields>;
 #}
 
-
 #xUtils(保持注解，及使用注解的Activity不被混淆，不然会影响Activity中你使用注解相关的代码无法使用) 
 -keep class * extends java.lang.annotation.Annotation {*;}
 -keep class com.otb.designerassist.activity.** {*;}
-
 
 #自己项目特殊处理代码（这些地方我使用了Gson类库和注解，所以不希望被混淆，以免影响程序）
 -keep class com.otb.designerassist.entity.** {*;}
 -keep class com.otb.designerassist.http.rspdata.** {*;}
 -keep class com.otb.designerassist.service.** {*;}
 
- 
 ##混淆保护自己项目的部分代码以及引用的第三方jar包library（想混淆去掉"#"）
 #-libraryjars libs/umeng-analytics-v5.2.4.jar
 #-libraryjars libs/alipaysecsdk.jar
 #-libraryjars libs/alipayutdid.jar
 #-libraryjars libs/weibosdkcore.jar 
 
-
 # 以libaray的形式引用的图片加载框架,不想混淆（注意，此处不是jar包形式，想混淆去掉"#"）
 #-keep class com.nostra13.universalimageloader.** { *; }
-
 
 ###-------- Gson 相关的混淆配置--------
 -keepattributes Signature
 -keepattributes *Annotation*
 -keep class sun.misc.Unsafe { *; }
-
-
-
 
 ###-------- pulltorefresh 相关的混淆配置---------
 -dontwarn com.handmark.pulltorefresh.library.**
@@ -153,22 +141,18 @@
 -dontwarn com.handmark.pulltorefresh.library.internal.**
 -keep class com.handmark.pulltorefresh.library.internal.** { *;}
 
-
 ###---------  reservoir 相关的混淆配置-------
 -keep class com.anupcowkur.reservoir.** { *;}
-
 
 ###-------- ShareSDK 相关的混淆配置---------
 -keep class cn.sharesdk.** { *; }
 -keep class com.sina.sso.** { *; }
-
 
 ###--------------umeng 相关的混淆配置-----------
 -keep class com.umeng.** { *; }
 -keep class com.umeng.analytics.** { *; }
 -keep class com.umeng.common.** { *; }
 -keep class com.umeng.newxp.** { *; }
-
 
 ###-----------MPAndroidChart图库相关的混淆配置------------
 -keep class com.github.mikephil.charting.** { *; }
@@ -211,9 +195,7 @@ buildTypes {
     }
 ````
 
-::: danger
-release节点下，minifyEnabled设置为true。
-:::                
+- release节点下，minifyEnabled设置为true。
 
 ####导出APK　　　　
 
