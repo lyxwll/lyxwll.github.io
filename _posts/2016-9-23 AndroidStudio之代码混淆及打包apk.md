@@ -14,11 +14,11 @@
 好了，知道在哪配置混淆文件后，下面开始讲讲如何配置混淆：           
 
 混淆文件 proguard-rules.pro 参数详解      
-参数 | 解释
------------- | -------------
+参数 | 解释                           
+------------ | -------------                                        
 -optimizationpasses 5  | # 指定代码的压缩级别            
 -dontusemixedcaseclassnames  | # 是否使用大小写混合
--dontskipnonpubliclibraryclasses | # 是否混淆第三方jar
+-dontskipnonpubliclibraryclasses | # 是否混淆第三方jar 
 -dontpreverify         | # 混淆时是否做预校验
 -verbose               | # 混淆时是否记录日志
 -optimizations !code/simplification/arithmetic,!field/*,!class/merging/*  | # 混淆时所采用的算法
