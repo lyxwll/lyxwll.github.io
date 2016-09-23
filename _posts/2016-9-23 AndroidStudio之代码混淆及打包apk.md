@@ -95,7 +95,8 @@
     java.lang.Object readResolve();
 }
  
-#保持枚举 enum 类不被混淆 如果混淆报错，建议直接使用上面的 -keepclassmembers class * implements java.io.Serializable即可
+#保持枚举 enum 类不被混淆      
+如果混淆报错，建议直接使用上面的-keepclassmembers class * implements java.io.Serializable即可             
 -keepclassmembers enum * {
   public static **[] values();
  public static ** valueOf(java.lang.String);
@@ -195,7 +196,7 @@ buildTypes {
     }
 ````
 
-- release节点下，minifyEnabled设置为true。
+- **release**节点下，**minifyEnabled**设置为**true**。
 
 ####导出APK　　　　
 
