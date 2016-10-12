@@ -115,6 +115,7 @@ JsonTools.java:
 
 - (3). Android端       
 ![img](/img/2016.10.11/0005.png)       
+
 在AndroidMainfest.xml中添加网络配置，如下:       
 ![img](/img/2016.10.11/0006.png)       
 
