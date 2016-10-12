@@ -8,8 +8,7 @@
 **数据格式** [http://www.json.org/json-zh.html](http://www.json.org/json-zh.html)     
 
 - (1).JsonObject对象：以**(key/value)对**形式存在的无序的jsonObject对象，一个对象以“{” 开始，“}”结束。每个“名称”后跟一个“:” ； **‘名称/值’ 对**之间使用“,” 分隔。key值必须要是string类型。
-- (2). Json数组： 有序的value的集合，这种形式被称为是jsonArray，数组是值（value）的有序集合。一个数组以“[” 开始，“]”结束。值之间使用“,”（逗号）分隔。      
- 在这两种数据结构下，值（value）可以是双引号括起来的字符串（string）、数值(number)、true、false、 null、对象（object）或者数组（array）。这些结构可以嵌套。        
+- (2). Json数组： 有序的value的集合，这种形式被称为是jsonArray，数组是值（value）的有序集合。一个数组以“[” 开始，“]”结束。值之间使用“,”分隔。  在这两种数据结构下，值（value）可以是双引号括起来的字符串（string）、数值(number)、true、false、 null、对象（object）或者数组（array）。这些结构可以嵌套。        
 ![img](/img/2016.10.11/0001.png)       
 
 ![img](/img/2016.10.11/0002.png)
