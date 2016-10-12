@@ -114,12 +114,12 @@ JsonTools.java:
 ```
 
 - (3). Android端       
-![img](/img/2016.10.11/0006.png)       
+![img](/img/2016.10.11/0005.png)       
 在AndroidMainfest.xml中添加网络配置，如下:       
-![img](/img/2016.10.11/0007.png)       
+![img](/img/2016.10.11/0006.png)       
 
 但是在4.0之后仍然会出现如下错误：   
-![img](/img/2016.10.11/0008.png)          
+![img](/img/2016.10.11/0007.png)          
 
 原因可能是：因为Http请求写在了主线程里， 在4.0之后在主线程里面执行Http请求都会报这个错，大概是怕Http请求时间太长造成程序假死的情况。
 解决方法：[http://www.tuicool.com/articles/MvmeYr](http://www.tuicool.com/articles/MvmeYr)      
