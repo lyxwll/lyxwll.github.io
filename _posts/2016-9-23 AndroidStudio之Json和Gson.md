@@ -18,15 +18,12 @@
 libs：[http://sourceforge.net/projects/json-lib/files/json-lib/](http://sourceforge.net/projects/json-lib/files/json-lib/)           
 
 - (1). Java EE 5.0下导入如下包：         
-
-
+![img](/img/2016.10.11/0003.png)
 
 - (2). 服务器端      
 关于toString的补充    
 [http://blog.163.com/tangyang_personal/blog/static/4622961320082268951289/](http://blog.163.com/tangyang_personal/blog/static/4622961320082268951289/) 
-
-
-
+![img](/img/2016.10.11/0004.png)
 
 JsonService.java 
 
@@ -116,15 +113,13 @@ JsonTools.java:
     }
 ```
 
-- (3). Android端     
-
-在AndroidMainfest.xml中添加网络配置，如下:   
-
-
+- (3). Android端       
+![img](/img/2016.10.11/0006.png)       
+在AndroidMainfest.xml中添加网络配置，如下:       
+![img](/img/2016.10.11/0007.png)       
 
 但是在4.0之后仍然会出现如下错误：   
-
-
+![img](/img/2016.10.11/0008.png)          
 
 原因可能是：因为Http请求写在了主线程里， 在4.0之后在主线程里面执行Http请求都会报这个错，大概是怕Http请求时间太长造成程序假死的情况。
 解决方法：[http://www.tuicool.com/articles/MvmeYr](http://www.tuicool.com/articles/MvmeYr)      
