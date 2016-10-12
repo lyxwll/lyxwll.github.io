@@ -10,8 +10,9 @@
 - (1).JsonObject对象：以**(key/value)对**形式存在的无序的jsonObject对象，一个对象以“{” 开始，“}”结束。每个“名称”后跟一个“:” ； **‘名称/值’ 对**之间使用“,” 分隔。key值必须要是string类型。
 - (2). Json数组： 有序的value的集合，这种形式被称为是jsonArray，数组是值（value）的有序集合。一个数组以“[” 开始，“]”结束。值之间使用“,”（逗号）分隔。      
  在这两种数据结构下，值（value）可以是双引号括起来的字符串（string）、数值(number)、true、false、 null、对象（object）或者数组（array）。这些结构可以嵌套。        
+![img](/img/2016.10.11/0001.png)       
 
-
+![img](/img/2016.10.11/0002.png)
 
 **Json应用**            
 libs：[http://sourceforge.net/projects/json-lib/files/json-lib/](http://sourceforge.net/projects/json-lib/files/json-lib/)           
@@ -32,7 +33,6 @@ JsonService.java
 **Json的几种数据格式：**        
 
 ```java          
-
 /**
  * 进行Json收发过程中的对应对象转换，即提供Json中的value    
  * @author FanFF       
@@ -100,13 +100,11 @@ public class JsonService {
         return list;
     }
 }
-
 ```
 
 JsonTools.java:    
 
 ```Java   
-
     /** @param key   
      * @param value   
      * @return Json对象的字符串表示  
@@ -116,11 +114,9 @@ JsonTools.java:
         jsonobject.put(key, value);
         return jsonobject.toString();
     }
-
 ```
 
 - (3). Android端     
-
 
 在AndroidMainfest.xml中添加网络配置，如下:   
 
@@ -137,7 +133,7 @@ JsonTools.java:
 在MainActivity文件的 setContentView(R.layout.activity_main)下面加上如下代码： 
 ```Java
 if (android.os.Build.VERSION.SDK_INT > 9) {       
-StrictMode.ThreadPolicy policy = new        StrictMode.ThreadPolicy.Builder().permitAll().build();    
+StrictMode.ThreadPolicy policy = new  StrictMode.ThreadPolicy.Builder().permitAll().build();    
 StrictMode.setThreadPolicy(policy);     
 }     
 ```
@@ -145,7 +141,6 @@ StrictMode.setThreadPolicy(policy);
 **方法二**：启动另一个线程执行网络连接任务，比如使用Thread、Runnable、Handler(推荐使用这种方法)。     
 建立网络连接        
 ```Java     
-
  /**    
   * 建立网络连接                  
   */          
@@ -203,11 +198,9 @@ public class HttpUtils {
         return jsonString;
     }
 }
-
 ````
 
-```Java      
-         
+```Java          
     /** 将输入流转换为字符串        
      * @param inputStream         
      * @return         
@@ -230,12 +223,10 @@ public class HttpUtils {
         }
         return jsonString;
     }
-
 ```
 
 按照服务器端的封装对Json字符串进行各种格式的数据解析  
 ```Java         
-
 /**    
  * 完成对json数据的解析       
  */   
@@ -348,11 +339,10 @@ public class JsonUtils {
 
 对应的服务器端类:      
 ```Java           
-	/**  
+/**  
  * json字符串对应的服务器对象  
  * Created by FanFF on 2016/2/3.     
  */   
-
 public class Person {       
 
     private int id;
@@ -368,8 +358,7 @@ public class Person {
         this.name = name;
         this.address = address;
     }
-
-
+    
     public int getId() {
         return id;
     }
@@ -398,7 +387,6 @@ public class Person {
                 + "]";
     }
 }
-
 ```     
 
 简单分析：服务端写入数据到相应的对象的属性中,客户端通过HttpUtils中的相应类获取网络中字节流并转化为字符串，然后解析字符串中的数据，提取该数据设置成相应的对象的属性。     
@@ -414,4 +402,8 @@ JSON和Gson的详细代码参加如下：
 [https://github.com/herdyouth/JsonDemo](https://github.com/herdyouth/JsonDemo ) 
 [https://github.com/herdyouth/GsonDemo](https://github.com/herdyouth/GsonDemo)        
 或者            
-[https://yunpan.cn/cxptw4A3WEtx2](https://yunpan.cn/cxptw4A3WEtx2) 访问密码 ee61
+[https://yunpan.cn/cxptw4A3WEtx2](https://yunpan.cn/cxptw4A3WEtx2) 访问密码 ee61           
+
+
+
+
