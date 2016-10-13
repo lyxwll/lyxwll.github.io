@@ -1,134 +1,130 @@
 
 现在Android的开发者基本上都使用Android Studio进行开发(如果你还在使用eclipse那也行，毕竟你乐意怎么样都行)。使用好Android Studio插件能大量的减少我们的工作量。
 
-1.GsonFormat
+**1.GsonFormat**    
 快速将json字符串转换成一个Java Bean，免去我们根据json字符串手写对应Java Bean的过程。
 
-使用方法：快捷键Alt+S也可以使用Alt+Insert选择GsonFormat
+使用方法：快捷键**Alt+S**也可以使用**Alt+Insert**选择GsonFormat
 
 
-2.Android ButterKnife Zelezny
+**2.Android ButterKnife Zelezny**     
 配合ButterKnife实现注解，从此不用写findViewById，想着就爽啊。在Activity，Fragment，Adapter中选中布局xml的资源id自动生成butterknife注解。
 
+使用方法：**Ctrl+Shift+B**选择图上所示选项
 
-使用方法：Ctrl+Shift+B选择图上所示选项
 
-
-3.Android Code Generator
+**3.Android Code Generator**   
 根据布局文件快速生成对应的Activity，Fragment，Adapter，Menu。
 
 
-4.Android Parcelable code generator
+**4.Android Parcelable code generator**     
 JavaBean序列化，快速实现Parcelable接口。
 
 
-5.Android Methods Count
+**5.Android Methods Count**       
 显示依赖库中得方法数
 
 
-6.Lifecycle Sorter
-可以根据Activity或者fragment的生命周期对其生命周期方法位置进行先后排序，快捷键Ctrl + alt + K
+**6.Lifecycle Sorter**       
+可以根据Activity或者fragment的生命周期对其生命周期方法位置进行先后排序，快捷键**Ctrl + alt + K**   
 
 
-7.CodeGlance
+**7.CodeGlance**        
 在右边可以预览代码，实现快速定位
 
 
-8.findBugs-IDEA
+**8.findBugs-IDEA**   
 查找bug的插件，Android Studio也提供了代码审查的功能（Analyze-Inspect Code…）
 
 
-9.ADB WIFI
+**9.ADB WIFI**        
 使用wifi无线调试你的app，无需root权限
 也可参考以下文章：
 Android wifi无线调试App新玩法ADB WIFI
 
 
-10.AndroidPixelDimenGenerator
+**10.AndroidPixelDimenGenerator**       
 Android Studio自动生成dimen.xml文件插件
 
 
-11.JsonOnlineViewer
+**11.JsonOnlineViewer**     
 在Android Studio中请求、调试接口
 
 
-12.Android Styler
+**12.Android Styler**           
 根据xml自动生成style代码的插件
-
 
 Usage:
 a. copy lines with future style from your layout.xml file
-b. paste it to styles.xml file with Ctrl+Shift+D (or context menu)
+b. paste it to styles.xml file with **Ctrl+Shift+D** (or context menu)
 c. enter name of new style in the modal window
 d. your style is prepared!
 
 
-13.Android Drawable Importer
+**13.Android Drawable Importer**      
 这是一个非常强大的图片导入插件。它导入Android图标与Material图标的Drawable ，批量导入Drawable ，多源导入Drawable（即导入某张图片各种dpi对应的图片）
 
 
-14.SelectorChapek for Android
+**14.SelectorChapek for Android**      
 通过资源文件命名自动生成Selector文件。
 
 
-15.GenerateSerialVersionUID
+**15.GenerateSerialVersionUID**  
 实现Serializable序列化bean
 
 Adds a new action ‘SerialVersionUID’ in the generate menu (alt + ins). The action adds an serialVersionUID field in the current class or updates it if it already exists, and assigns it the same value the standard ‘serialver’ JDK tool would return. The action is only visible when IDEA is not rebuilding its indexes, the class is serializable and either no serialVersionUID field exists or its value is different from the one the ‘serialver’ tool would return.
 
 
-16.genymotion
+**16.genymotion**          
 速度较快的android模拟器
 
 
-17.LeakCanary
+**17.LeakCanary**           
 帮助你在开发阶段方便的检测出内存泄露的问题，使用起来更简单方便。
 可以参考以下文章：
 LeakCanary 中文使用说明
 
 
-18.Android Postfix Completion
+**18.Android Postfix Completion**       
 可根据后缀快速完成代码，这个属于拓展吧，系统已经有这些功能，如sout、notnull等，这个插件在原有的基础上增添了一些新的功能，我更想做的是通过原作者的代码自己定制功能，那就更爽了
 
 
-19.Android Holo Colors Generator
+**19.Android Holo Colors Generator**           
 通过自定义Holo主题颜色生成对应的Drawable和布局文件
 
 
-20.dagger-intellij-plugin
+**20.dagger-intellij-plugin**            
 dagger可视化辅助工具
 
 
-21.GradleDependenciesHelperPlugin
+**21.GradleDependenciesHelperPlugin**            
 maven gradle 依赖支持自动补全
 
 
-22.RemoveButterKnife
+**22.RemoveButterKnife**           
 ButterKnife这个第三方库每次更新之后，绑定view的注解都会改变，从bind,到inject，再到bindview，搞得很多人都不敢升级，一旦升级，就会有巨量的代码需要手动修改，非常痛苦
 当我们有一些非常棒的代码需要拿到其他项目使用，但是我们发现，那个项目对第三方库的使用是有限制的，我们不能使用butterknife，这时候，我们又得从注解改回findviewbyid
 针对上面的两种情况，如果view比较少还好说，如果有几十个view，那么我们一个个的手动删除注解，写findviewbyid语句，简直是一场噩梦（别问我为什么知道这是噩梦）
 所以，这种有规律又重复简单的工作为什么不能用一个插件来实现呢？于是RemoveButterKnife的想法就出现了。
 
-具体介绍
 
-
-23.AndroidProguardPlugin
+**23.AndroidProguardPlugin**         
 一键生成项目混淆代码插件，值得你安装~(不过目前可能有些第三方项目的混淆还未添加完全)
 
 
-24.otto-intellij-plugin
+**24.otto-intellij-plugin**        
 otto事件导航工具。
 
 
-25.eventbus-intellij-plugin
+**25.eventbus-intellij-plugin**         
 eventbus导航插件
 
 
-26.idea-markdown
+**26.idea-markdown**          
 markdown插件
 
 
-27.Sexy Editor
+**27.Sexy Editor**          
 设置AS代码编辑区的背景图
 
 首先点击界面的设置按钮 进入设置界面，选中Plugins,右边选择 Browser … ，输入Sexy … 下面自动弹出候选插件，右边点击Install 安装
@@ -138,11 +134,11 @@ markdown插件
 重启完成之后 进入设置界面 选择other Setting 下的Sexy Editor ， 右侧 insert 一张或多张图片即可，上面的其他设置可以设置方位 间隔时间 透明度等等，设置完成后，要关闭打开的文件，重新打开项目文件即可在代码编辑区显示插入的图片，作为代码编辑区的背景图。
 
 
-28.folding-plugin
+**28.folding-plugin**        
 布局文件分组的插件
 
 
-29.Android-DPI-Calculator
+**29.Android-DPI-Calculator**
 DPI计算插件
 
 
@@ -151,13 +147,13 @@ DPI计算插件
 或者
 
 
-30.gradle-retrolambda
+**30.gradle-retrolambda**       
 在java 6 7中使用 lambda表达式插件
 
 修改编译的jdk为java8:
 
 
-31.Android Studio Prettify
+**31.Android Studio Prettify**
 可以将代码中的字符串写在string.xml文件中
 
 选中字符串鼠标右键选择图中所示
